@@ -3,8 +3,8 @@ import { copyFileSync, existsSync, mkdirSync } from 'fs'
 import { resolve } from 'path'
 
 export default defineConfig({
-  // base path for GitHub Pages (repo: Ody77xr/xry66)
-  base: '/xry66/',
+  // base path for Netlify (root deployment)
+  base: '/',
   root: '.',
   build: {
     outDir: 'dist',
@@ -14,7 +14,7 @@ export default defineConfig({
         main: './index.html',
         home: './xrhome.html',
         about: './xrabout.html',
-        admin: './admin-login.html',
+        adminLogin: './admin-login.html',
         adminDashboard: './xradmin-dashboard.html',
         categoryGallery: './xrcategory-gallery.html',
         docs: './xrdocs.html',
@@ -30,18 +30,7 @@ export default defineConfig({
         videoPlayer: './xrvideo-player.html',
         videoPlayerAlt: './xrvideoplayer.html',
         xrgxy: './xrgxy.html'
-      },
-      external: [
-        'floating-nav.js',
-        'app.js',
-        'supabase-config.js',
-        'admin-dashboard.js',
-        'video-gallery.js',
-        'hxmp-video-player.js',
-        'access-control.js',
-        'category-gallery.js',
-        'photo-gallery.js'
-      ]
+      }
     },
     copyPublicDir: true
   },

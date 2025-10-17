@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Hxmp Space - Uploader</title>
+    <link rel="stylesheet" href="styles.css?v=1760664105">
+    <link rel="stylesheet" href="floating-nav.css?v=1760664105">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Uploader Content -->
+    <div class="gallery-container" style="margin-top: 20px; padding: 2rem 0;">
+        <div class="container">
+            <div class="gallery-header">
+                <h1 class="gallery-title">Content Uploader</h1>
+                <p style="color: rgba(255, 255, 255, 0.7); font-size: 1.1rem; margin-bottom: 2rem;">
+                    Share your creative content with the Hxmp Space community
+                </p>
+            </div>
+
+            <!-- Upload Form -->
+            <div style="max-width: 600px; margin: 0 auto;">
+                <form id="uploadForm" style="background: #2d2d2d; padding: 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                    
+                    <!-- File Upload Area -->
+                    <div id="dropZone" style="
+                        border: 2px dashed #4ecdc4;
+                        border-radius: 15px;
+                        padding: 3rem 2rem;
+                        text-align: center;
+                        margin-bottom: 2rem;
+                        transition: all 0.3s ease;
+                        cursor: pointer;
+                        background: rgba(78, 205, 196, 0.05);
+                    ">
+                        <div style="color: #4ecdc4; font-size: 3rem; margin-bottom: 1rem;">📁</div>
+                        <h3 style="color: #4ecdc4; margin-bottom: 0.5rem;">Drop files here or click to browse</h3>
+                        <p style="color: rgba(255, 255, 255, 0.7);">Supports: MP4, MOV, AVI, JPG, PNG, GIF (Max 100MB)</p>
+                        <input type="file" id="fileInput" multiple accept="video/*,image/*" style="display: none;">
+                    </div>
+
+                    <!-- File Preview Area -->
+                    <div id="filePreview" style="margin-bottom: 2rem; display: none;">
+                        <h3 style="color: #fff; margin-bottom: 1rem;">Selected Files:</h3>
+                        <div id="previewContainer" style="display: grid; gap: 1rem;"></div>
+                    </div>
+
+                    <!-- Content Details -->
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; color: #fff; margin-bottom: 0.5rem; font-weight: 600;">Title *</label>
+                        <input type="text" id="contentTitle" required style="
+                            width: 100%;
+                            padding: 1rem;
+                            background: #1a1a1a;
+                            border: 2px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 10px;
+                            color: #fff;
+                            font-size: 1rem;
+                            transition: border-color 0.3s ease;
+                        " placeholder="Enter content title">
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; color: #fff; margin-bottom: 0.5rem; font-weight: 600;">Description</label>
+                        <textarea id="contentDescription" rows="4" style="
+                            width: 100%;
+                            padding: 1rem;
+                            background: #1a1a1a;
+                            border: 2px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 10px;
+                            color: #fff;
+                            font-size: 1rem;
+                            resize: vertical;
+                            transition: border-color 0.3s ease;
+                        " placeholder="Describe your content..."></textarea>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; color: #fff; margin-bottom: 0.5rem; font-weight: 600;">Category *</label>
+                        <select id="contentCategory" required style="
+                            width: 100%;
+                            padding: 1rem;
+                            background: #1a1a1a;
+                            border: 2px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 10px;
+                            color: #fff;
+                            font-size: 1rem;
+                        ">
+                            <option value="">Select a category</option>
+                            <option value="thot-mommies">Thot-Mommies</option>
+                            <option value="bubble-butts">Bubble Butts</option>
+                            <option value="premium-vault">Premium Vault</option>
+                            <option value="tits">Tits</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; color: #fff; margin-bottom: 0.5rem; font-weight: 600;">Tags</label>
+                        <input type="text" id="contentTags" style="
+                            width: 100%;
+                            padding: 1rem;
+                            background: #1a1a1a;
+                            border: 2px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 10px;
+                            color: #fff;
+                            font-size: 1rem;
+                        " placeholder="Enter tags separated by commas">
+                    </div>
+
+                    <!-- Privacy Settings -->
+                    <div style="margin-bottom: 2rem;">
+                        <label style="display: block; color: #fff; margin-bottom: 1rem; font-weight: 600;">Privacy Settings</label>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <label style="display: flex; align-items: center; color: rgba(255, 255, 255, 0.8); cursor: pointer;">
+                                <input type="radio" name="privacy" value="public" checked style="margin-right: 0.5rem;">
+                                Public
+                            </label>
+                            <label style="display: flex; align-items: center; color: rgba(255, 255, 255, 0.8); cursor: pointer;">
+                                <input type="radio" name="privacy" value="private" style="margin-right: 0.5rem;">
+                                Private
+                            </label>
+                            <label style="display: flex; align-items: center; color: rgba(255, 255, 255, 0.8); cursor: pointer;">
+                                <input type="radio" name="privacy" value="premium" style="margin-right: 0.5rem;">
+                                Premium Only
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Upload Progress -->
+                    <div id="uploadProgress" style="display: none; margin-bottom: 1.5rem;">
+                        <div style="background: #1a1a1a; border-radius: 10px; overflow: hidden;">
+                            <div id="progressBar" style="
+                                height: 10px;
+                                background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+                                width: 0%;
+                                transition: width 0.3s ease;
+                            "></div>
+                        </div>
+                        <p id="progressText" style="color: #4ecdc4; text-align: center; margin-top: 0.5rem;">Uploading... 0%</p>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" style="
+                        width: 100%;
+                        padding: 1rem 2rem;
+                        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+                        color: #fff;
+                        border: none;
+                        border-radius: 50px;
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                    ">Upload Content</button>
+                </form>
+            </div>
+
+            <!-- Upload Guidelines -->
+            <div style="max-width: 800px; margin: 3rem auto 0; background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 15px;">
+                <h2 style="color: #4ecdc4; margin-bottom: 1rem;">Upload Guidelines</h2>
+                <ul style="color: rgba(255, 255, 255, 0.8); line-height: 1.6;">
+                    <li>Ensure your content is original or you have proper rights to share it</li>
+                    <li>Files should be high quality (minimum 720p for videos)</li>
+                    <li>Maximum file size: 100MB per file</li>
+                    <li>Content must comply with our community guidelines</li>
+                    <li>Add descriptive titles and tags to help users discover your content</li>
+                    <li>Preview your content before uploading to ensure quality</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+            const filePreview = document.getElementById('filePreview');
+            const previewContainer = document.getElementById('previewContainer');
+            const uploadForm = document.getElementById('uploadForm');
+            const uploadProgress = document.getElementById('uploadProgress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+
+            let selectedFiles = [];
+
+            // Drop zone functionality
+            dropZone.addEventListener('click', () => fileInput.click());
+            
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = '#ff6b6b';
+                dropZone.style.background = 'rgba(255, 107, 107, 0.1)';
+            });
+
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = '#4ecdc4';
+                dropZone.style.background = 'rgba(78, 205, 196, 0.05)';
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = '#4ecdc4';
+                dropZone.style.background = 'rgba(78, 205, 196, 0.05)';
+                handleFiles(e.dataTransfer.files);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+
+            function handleFiles(files) {
+                selectedFiles = Array.from(files);
+                displayFilePreview();
+            }
+
+            function displayFilePreview() {
+                if (selectedFiles.length === 0) {
+                    filePreview.style.display = 'none';
+                    return;
+                }
+
+                filePreview.style.display = 'block';
+                previewContainer.innerHTML = '';
+
+                selectedFiles.forEach((file, index) => {
+                    const fileDiv = document.createElement('div');
+                    fileDiv.style.cssText = `
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 1rem;
+                        background: #1a1a1a;
+                        border-radius: 10px;
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                    `;
+
+                    const fileInfo = document.createElement('div');
+                    fileInfo.innerHTML = `
+                        <p style="color: #fff; margin: 0; font-weight: 600;">${file.name}</p>
+                        <p style="color: rgba(255, 255, 255, 0.7); margin: 0; font-size: 0.9rem;">
+                            ${(file.size / 1024 / 1024).toFixed(2)} MB • ${file.type}
+                        </p>
+                    `;
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.innerHTML = '×';
+                    removeBtn.style.cssText = `
+                        background: #ff6b6b;
+                        color: #fff;
+                        border: none;
+                        border-radius: 50%;
+                        width: 30px;
+                        height: 30px;
+                        cursor: pointer;
+                        font-size: 1.2rem;
+                    `;
+                    removeBtn.addEventListener('click', () => removeFile(index));
+
+                    fileDiv.appendChild(fileInfo);
+                    fileDiv.appendChild(removeBtn);
+                    previewContainer.appendChild(fileDiv);
+                });
+            }
+
+            function removeFile(index) {
+                selectedFiles.splice(index, 1);
+                displayFilePreview();
+            }
+
+            // Form submission
+            uploadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (selectedFiles.length === 0) {
+                    alert('Please select at least one file to upload.');
+                    return;
+                }
+
+                simulateUpload();
+            });
+
+            function simulateUpload() {
+                uploadProgress.style.display = 'block';
+                let progress = 0;
+                
+                const interval = setInterval(() => {
+                    progress += Math.random() * 15;
+                    if (progress > 100) progress = 100;
+                    
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = `Uploading... ${Math.round(progress)}%`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            alert('Upload completed successfully!');
+                            uploadForm.reset();
+                            selectedFiles = [];
+                            displayFilePreview();
+                            uploadProgress.style.display = 'none';
+                            progressBar.style.width = '0%';
+                        }, 500);
+                    }
+                }, 200);
+            }
+
+            // Input focus effects
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.borderColor = '#4ecdc4';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                });
+            });
+        });
+    </script>
+    <script src="floating-nav.js?v=1760664105"></script>
+    <script src="app.js?v=1760664105"></script>
+</body>
+</html>

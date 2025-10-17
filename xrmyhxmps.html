@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>HXMP Stash - Hump Heaven</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="floating-nav.css?v=1760664105">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'holo-gold': '#FFD700',
+                        'holo-blue': '#00FFFF',
+                        'holo-purple': '#FF00FF',
+                        'cyber-dark': '#0A0A0F',
+                        'cyber-gray': '#1A1A2E'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .holographic-text {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: holographic 3s ease-in-out infinite;
+        }
+        
+        @keyframes holographic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 255, 0.7); }
+        }
+        
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        
+        .glass-morphism {
+            background: rgba(26, 26, 46, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+        
+        .cyber-glow {
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3), 0 0 60px rgba(255, 0, 255, 0.2);
+        }
+
+        .tab-btn {
+            position: relative;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            color: rgba(0, 255, 255, 0.6);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: #00FFFF;
+            border-bottom-color: #00FFFF;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .tab-btn:hover {
+            color: #FFD700;
+        }
+
+        .stash-card {
+            background: rgba(26, 26, 46, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .stash-card:hover {
+            border-color: #FFD700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            transform: translateY(-5px);
+        }
+
+        html, body { overflow-x: hidden; background: #0A0A0F; }
+    </style>
+</head>
+<body class="bg-cyber-dark text-white overflow-x-hidden pb-32">
+
+    <!-- Require Login -->
+    <div id="loginRequired" class="hidden min-h-screen flex items-center justify-center">
+        <div class="glass-morphism rounded-3xl p-12 text-center max-w-lg cyber-glow">
+            <div class="text-6xl mb-6 animate-pulse-glow">🔐</div>
+            <h1 class="text-4xl font-cyber holographic-text mb-4">AUTHENTICATION REQUIRED</h1>
+            <p class="text-gray-300 font-mono mb-8">
+                Please sign in to access your personal HXMP Stash.
+            </p>
+            <a href="xrmembership.html" class="inline-block px-8 py-4 bg-gradient-to-r from-holo-blue to-holo-purple rounded-full font-cyber font-bold hover:scale-105 transition-transform">
+                Sign In / Create Account
+            </a>
+        </div>
+    </div>
+
+    <!-- Stash Content (Logged In) -->
+    <div id="stashContent" class="hidden">
+        
+        <!-- Abstract Hero Header -->
+        <div class="relative overflow-hidden" style="padding: 4rem 0 2rem; background: linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #0A0A0F 100%);">
+            <div class="absolute inset-0 opacity-20">
+                <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-holo-blue rounded-full blur-3xl animate-pulse"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-holo-purple rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+            </div>
+
+            <div class="container mx-auto px-4 max-w-7xl relative z-10">
+                <div class="flex items-center justify-between flex-wrap gap-4">
+                    <div>
+                        <div class="text-sm font-mono text-gray-400 mb-2">// USER_VAULT</div>
+                        <h1 class="text-5xl md:text-7xl font-cyber font-black holographic-text mb-3 animate-float">
+                            MY HXMP STASH
+                        </h1>
+                        <div class="flex items-center gap-4 flex-wrap">
+                            <span class="px-4 py-2 bg-gradient-to-r from-holo-gold to-holo-purple rounded-full text-xs font-bold text-cyber-dark" id="userTierBadge">
+                                👑 VIP
+                            </span>
+                            <span class="text-sm font-mono text-gray-400">
+                                <span id="totalSavedCount">0</span> saved items
+                            </span>
+                            <span class="text-sm font-mono text-gray-400">
+                                <span id="totalUnlocksCount">0</span> unlocks
+                            </span>
+                        </div>
+                    </div>
+                    <button onclick="syncStash()" class="px-6 py-3 glass-morphism border border-holo-blue text-holo-blue rounded-lg font-cyber hover:bg-holo-blue hover:text-cyber-dark transition-all">
+                        🔄 SYNC
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="border-b border-holo-blue border-opacity-30" style="background: rgba(10, 10, 15, 0.8);">
+            <div class="container mx-auto px-4 max-w-7xl">
+                <div class="flex overflow-x-auto no-scrollbar">
+                    <button class="tab-btn active" data-tab="saved" onclick="switchTab('saved')">
+                        💾 SAVED VIDEOS
+                    </button>
+                    <button class="tab-btn" data-tab="unlocked" onclick="switchTab('unlocked')">
+                        🔓 UNLOCKED
+                    </button>
+                    <button class="tab-btn" data-tab="comments" onclick="switchTab('comments')">
+                        💬 MY COMMENTS
+                    </button>
+                    <button class="tab-btn" data-tab="content" onclick="switchTab('content')">
+                        🎬 MY CONTENT
+                    </button>
+                    <button class="tab-btn" data-tab="transactions" onclick="switchTab('transactions')">
+                        💳 TRANSACTIONS
+                    </button>
+                    <button class="tab-btn" data-tab="vault" onclick="switchTab('vault')">
+                        🔐 SECURE VAULT
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="container mx-auto px-4 max-w-7xl py-8">
+            
+            <!-- Saved Videos Tab -->
+            <div id="tab-saved" class="tab-content">
+                <div class="mb-6 flex items-center justify-between">
+                    <h2 class="text-3xl font-cyber holographic-text">SAVED VIDEOS</h2>
+                    <div class="text-sm font-mono text-gray-400">
+                        <span id="savedCount">0</span> videos
+                    </div>
+                </div>
+                <div id="savedVideos" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Saved videos will load here -->
+                </div>
+                <div id="savedEmpty" class="text-center py-20 glass-morphism rounded-2xl">
+                    <div class="text-6xl mb-4">💾</div>
+                    <h3 class="text-2xl font-cyber text-holo-gold mb-3">No Saved Videos</h3>
+                    <p class="text-gray-400 font-mono mb-6">Start saving videos to watch later!</p>
+                    <a href="xrvideo-gallery.html" class="inline-block px-6 py-3 border-2 border-holo-blue text-holo-blue rounded-lg font-cyber hover:bg-holo-blue hover:text-cyber-dark transition-all">
+                        Browse Videos
+                    </a>
+                </div>
+            </div>
+
+            <!-- Unlocked Videos Tab -->
+            <div id="tab-unlocked" class="tab-content hidden">
+                <div class="mb-6 flex items-center justify-between">
+                    <h2 class="text-3xl font-cyber holographic-text">UNLOCKED VIDEOS</h2>
+                    <div class="text-sm font-mono text-gray-400">
+                        <span id="unlockedCount">0</span> unlocked
+                    </div>
+                </div>
+                <div id="unlockedVideos" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Unlocked videos will load here -->
+                </div>
+                <div id="unlockedEmpty" class="text-center py-20 glass-morphism rounded-2xl">
+                    <div class="text-6xl mb-4">🔓</div>
+                    <h3 class="text-2xl font-cyber text-holo-gold mb-3">No Unlocked Videos</h3>
+                    <p class="text-gray-400 font-mono mb-6">Use your monthly unlock or watch ads to unlock premium content!</p>
+                    <a href="xrvideo-gallery.html" class="inline-block px-6 py-3 border-2 border-holo-purple text-holo-purple rounded-lg font-cyber hover:bg-holo-purple hover:text-cyber-dark transition-all">
+                        Unlock Videos
+                    </a>
+                </div>
+            </div>
+
+            <!-- Comments Tab -->
+            <div id="tab-comments" class="tab-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-cyber holographic-text mb-2">MY COMMENTS</h2>
+                    <div class="text-sm font-mono text-gray-400">
+                        <span id="commentsCount">0</span> comments • <span id="repliesCount">0</span> replies received
+                    </div>
+                </div>
+                <div id="userComments" class="space-y-4">
+                    <!-- Comments will load here -->
+                </div>
+                <div id="commentsEmpty" class="text-center py-20 glass-morphism rounded-2xl">
+                    <div class="text-6xl mb-4">💬</div>
+                    <h3 class="text-2xl font-cyber text-holo-gold mb-3">No Comments Yet</h3>
+                    <p class="text-gray-400 font-mono">Start engaging with the community!</p>
+                </div>
+            </div>
+
+            <!-- My Content Tab -->
+            <div id="tab-content" class="tab-content hidden">
+                <div class="mb-6 flex items-center justify-between">
+                    <h2 class="text-3xl font-cyber holographic-text">MY CONTENT</h2>
+                    <a href="xruploader.html" class="px-6 py-3 bg-gradient-to-r from-holo-purple to-holo-blue rounded-lg font-cyber font-bold hover:scale-105 transition-transform">
+                        + Upload New
+                    </a>
+                </div>
+                <div id="myContent" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- User content will load here -->
+                </div>
+                <div id="contentEmpty" class="text-center py-20 glass-morphism rounded-2xl">
+                    <div class="text-6xl mb-4">🎬</div>
+                    <h3 class="text-2xl font-cyber text-holo-gold mb-3">No Content Uploaded</h3>
+                    <p class="text-gray-400 font-mono mb-6">VIP members can upload and earn from their content!</p>
+                    <a href="xruploader.html" class="inline-block px-8 py-4 bg-gradient-to-r from-holo-gold to-holo-purple rounded-full font-cyber font-bold text-cyber-dark hover:scale-105 transition-transform">
+                        Start Creating
+                    </a>
+                </div>
+            </div>
+
+            <!-- Transactions Tab -->
+            <div id="tab-transactions" class="tab-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-cyber holographic-text mb-2">TRANSACTION HISTORY</h2>
+                    <div class="flex gap-6 text-sm font-mono">
+                        <span class="text-gray-400">Total Spent: <span class="text-holo-gold" id="totalSpent">$0.00</span></span>
+                        <span class="text-gray-400">Total Earned: <span class="text-holo-blue" id="totalEarned">$0.00</span></span>
+                    </div>
+                </div>
+                
+                <!-- Filter -->
+                <div class="mb-6 flex gap-3">
+                    <button onclick="filterTransactions('all')" class="trans-filter active px-4 py-2 rounded-lg bg-holo-blue text-cyber-dark font-bold text-sm">
+                        All
+                    </button>
+                    <button onclick="filterTransactions('subscriptions')" class="trans-filter px-4 py-2 rounded-lg border border-holo-purple text-holo-purple font-bold text-sm hover:bg-holo-purple hover:text-cyber-dark transition-all">
+                        Subscriptions
+                    </button>
+                    <button onclick="filterTransactions('unlocks')" class="trans-filter px-4 py-2 rounded-lg border border-holo-gold text-holo-gold font-bold text-sm hover:bg-holo-gold hover:text-cyber-dark transition-all">
+                        Unlocks
+                    </button>
+                    <button onclick="filterTransactions('earnings')" class="trans-filter px-4 py-2 rounded-lg border border-holo-blue text-holo-blue font-bold text-sm hover:bg-holo-blue hover:text-cyber-dark transition-all">
+                        Earnings
+                    </button>
+                </div>
+
+                <div id="transactions" class="space-y-3">
+                    <!-- Transactions will load here -->
+                </div>
+                <div id="transactionsEmpty" class="text-center py-20 glass-morphism rounded-2xl">
+                    <div class="text-6xl mb-4">💳</div>
+                    <h3 class="text-2xl font-cyber text-holo-gold mb-3">No Transactions</h3>
+                    <p class="text-gray-400 font-mono">Your transaction history will appear here</p>
+                </div>
+            </div>
+
+            <!-- Secure Vault Tab -->
+            <div id="tab-vault" class="tab-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-cyber holographic-text mb-2">SECURE VAULT</h2>
+                    <p class="text-sm font-mono text-gray-400">Your unlock passwords are securely stored here</p>
+                </div>
+
+                <div class="glass-morphism rounded-2xl p-6 mb-6 border-2 border-holo-gold cyber-glow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-4xl">🔐</div>
+                        <h3 class="text-xl font-cyber text-holo-gold">PASSWORD MANAGER</h3>
+                    </div>
+                    <p class="text-sm text-gray-300 font-mono mb-6">
+                        Your unlock passwords are encrypted and stored locally. Use these to unlock videos again if they lock or you forget your password.
+                    </p>
+
+                    <div id="vaultPasswords" class="space-y-3">
+                        <!-- Passwords will load here -->
+                    </div>
+
+                    <div id="vaultEmpty" class="text-center py-12">
+                        <div class="text-5xl mb-3 opacity-50">🔑</div>
+                        <p class="text-gray-500 font-mono text-sm">No passwords stored yet</p>
+                    </div>
+                </div>
+
+                <!-- Master Password Section -->
+                <div class="glass-morphism rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-4xl">⚡</div>
+                        <h3 class="text-xl font-cyber holographic-text">MASTER UNLOCK KEY</h3>
+                    </div>
+                    <p class="text-sm text-gray-300 font-mono mb-4">
+                        If you have the master key, enter it here to unlock ALL content permanently.
+                    </p>
+                    <div class="flex gap-3">
+                        <input type="password" id="masterKeyInput" placeholder="Enter master key..." class="flex-1 input bg-cyber-gray border-holo-gold text-white font-mono" />
+                        <button onclick="applyMasterKey()" class="px-6 py-3 bg-gradient-to-r from-holo-gold to-holo-purple rounded-lg font-cyber font-bold text-cyber-dark hover:scale-105 transition-transform">
+                            Unlock All
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="video-gallery.js?v=1760664105"></script>
+    <script>
+        // Check authentication
+        const isLoggedIn = localStorage.getItem('hx_isLoggedIn') === 'true';
+        
+        if (!isLoggedIn) {
+            document.getElementById('loginRequired').classList.remove('hidden');
+            document.getElementById('stashContent').classList.add('hidden');
+        } else {
+            document.getElementById('loginRequired').classList.add('hidden');
+            document.getElementById('stashContent').classList.remove('hidden');
+            loadStashData();
+        }
+
+        // Tab Switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+
+            // Load tab data
+            loadTabData(tabName);
+        }
+
+        function loadStashData() {
+            const userTier = localStorage.getItem('hx_memberTier') || 'free';
+            document.getElementById('userTierBadge').textContent = userTier === 'vip' ? '👑 VIP' : '🆓 FREE';
+            
+            loadTabData('saved');
+            updateCounts();
+        }
+
+        function updateCounts() {
+            const saved = JSON.parse(localStorage.getItem('hx_savedVideos') || '[]');
+            const unlocked = JSON.parse(localStorage.getItem('hx_unlockedVideos') || '[]');
+            
+            document.getElementById('totalSavedCount').textContent = saved.length;
+            document.getElementById('totalUnlocksCount').textContent = unlocked.length;
+        }
+
+        function loadTabData(tabName) {
+            switch(tabName) {
+                case 'saved':
+                    loadSavedVideos();
+                    break;
+                case 'unlocked':
+                    loadUnlockedVideos();
+                    break;
+                case 'comments':
+                    loadUserComments();
+                    break;
+                case 'content':
+                    loadUserContent();
+                    break;
+                case 'transactions':
+                    loadTransactions();
+                    break;
+                case 'vault':
+                    loadVault();
+                    break;
+            }
+        }
+
+        function loadSavedVideos() {
+            const saved = JSON.parse(localStorage.getItem('hx_savedVideos') || '[]');
+            const container = document.getElementById('savedVideos');
+            const empty = document.getElementById('savedEmpty');
+
+            document.getElementById('savedCount').textContent = saved.length;
+
+            if (saved.length === 0) {
+                container.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            empty.classList.add('hidden');
+            container.innerHTML = saved.map(video => `
+                <div class="stash-card group cursor-pointer" onclick="window.location.href='xrvideoplayer.html?id=${video.id}'">
+                    <div class="aspect-video bg-gradient-to-br from-cyber-gray to-cyber-dark rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-holo-blue/10 to-holo-purple/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <svg class="w-16 h-16 text-holo-blue opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all z-10" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-sm text-holo-gold mb-2 line-clamp-2 group-hover:text-holo-blue transition-colors">${video.title}</h4>
+                    <div class="flex justify-between text-xs text-gray-400 mb-2">
+                        <span>${video.duration}</span>
+                        <span>👁️ ${video.views}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-mono text-gray-500">Saved ${formatDate(video.savedAt)}</span>
+                        <button onclick="removeSaved('${video.id}', event)" class="text-red-500 hover:text-red-400 text-xs">
+                            ✕
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadUnlockedVideos() {
+            const unlocked = JSON.parse(localStorage.getItem('hx_unlockedVideos') || '[]');
+            const container = document.getElementById('unlockedVideos');
+            const empty = document.getElementById('unlockedEmpty');
+
+            document.getElementById('unlockedCount').textContent = unlocked.length;
+
+            if (unlocked.length === 0) {
+                container.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            empty.classList.add('hidden');
+            container.innerHTML = unlocked.map(video => {
+                const isExpired = video.expiresAt && Date.now() > video.expiresAt;
+                const isPermanent = !video.expiresAt;
+
+                return `
+                <div class="stash-card group cursor-pointer ${isExpired ? 'opacity-50' : ''}" onclick="window.location.href='xrvideoplayer.html?id=${video.id}'">
+                    <div class="aspect-video bg-gradient-to-br from-cyber-gray to-cyber-dark rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-holo-purple/10 to-holo-gold/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <svg class="w-16 h-16 text-holo-purple opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all z-10" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path>
+                        </svg>
+                        ${isPermanent ? '<div class="absolute top-2 right-2 px-2 py-1 bg-holo-gold text-cyber-dark rounded-full text-xs font-bold">∞</div>' : ''}
+                        ${isExpired ? '<div class="absolute top-2 right-2 px-2 py-1 bg-red-500 text-white rounded-full text-xs font-bold">EXPIRED</div>' : ''}
+                    </div>
+                    <h4 class="font-bold text-sm text-holo-purple mb-2 line-clamp-2 group-hover:text-holo-gold transition-colors">${video.title}</h4>
+                    <div class="flex justify-between text-xs text-gray-400 mb-2">
+                        <span>${video.duration}</span>
+                        <span class="text-holo-gold">${isPermanent ? 'Permanent' : isExpired ? 'Expired' : formatTimeLeft(video.expiresAt)}</span>
+                    </div>
+                    <div class="text-xs font-mono text-gray-500">
+                        Unlocked ${formatDate(video.unlockedAt)}
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function loadUserComments() {
+            const allComments = [];
+            
+            // Gather comments from all videos
+            const videoKeys = Object.keys(localStorage).filter(key => key.startsWith('video_'));
+            videoKeys.forEach(key => {
+                const videoData = JSON.parse(localStorage.getItem(key));
+                if (videoData.comments) {
+                    videoData.comments.forEach(comment => {
+                        allComments.push({
+                            ...comment,
+                            videoId: key.replace('video_', '')
+                        });
+                    });
+                }
+            });
+
+            const container = document.getElementById('userComments');
+            const empty = document.getElementById('commentsEmpty');
+
+            document.getElementById('commentsCount').textContent = allComments.length;
+            document.getElementById('repliesCount').textContent = 0; // Would be calculated from replies
+
+            if (allComments.length === 0) {
+                container.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            empty.classList.add('hidden');
+            container.innerHTML = allComments.map(comment => `
+                <div class="stash-card">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-holo-blue to-holo-purple flex items-center justify-center font-bold text-lg">
+                            ${comment.author.charAt(0)}
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="font-bold text-holo-blue">${comment.author}</span>
+                                <span class="text-xs text-gray-500">${formatDate(comment.date)}</span>
+                            </div>
+                            <p class="text-gray-300 mb-3">${comment.text}</p>
+                            <div class="flex items-center gap-4 text-xs">
+                                <span class="text-holo-gold">👍 ${comment.likes} likes</span>
+                                <a href="xrvideoplayer.html?id=${comment.videoId}" class="text-holo-blue hover:text-holo-gold transition-colors">
+                                    View Video →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadUserContent() {
+            const content = JSON.parse(localStorage.getItem('hx_userUploads') || '[]');
+            const container = document.getElementById('myContent');
+            const empty = document.getElementById('contentEmpty');
+
+            if (content.length === 0) {
+                container.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            empty.classList.add('hidden');
+            container.innerHTML = content.map(item => `
+                <div class="stash-card group cursor-pointer" onclick="viewContent('${item.id}')">
+                    <div class="aspect-video bg-gradient-to-br from-cyber-gray to-cyber-dark rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
+                        ${item.type === 'video' ? 
+                            '<svg class="w-16 h-16 text-holo-gold opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path></svg>' :
+                            '<svg class="w-16 h-16 text-holo-gold opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path></svg>'
+                        }
+                        <div class="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold ${item.status === 'approved' ? 'bg-green-500' : item.status === 'pending' ? 'bg-yellow-500 text-cyber-dark' : 'bg-red-500'}">
+                            ${item.status.toUpperCase()}
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-sm text-holo-gold mb-2 line-clamp-2">${item.title}</h4>
+                    <div class="flex justify-between text-xs text-gray-400 mb-2">
+                        <span>👁️ ${item.views || 0}</span>
+                        <span>💰 $${(item.earnings || 0).toFixed(2)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadTransactions() {
+            const transactions = JSON.parse(localStorage.getItem('hx_transactions') || '[]');
+            const container = document.getElementById('transactions');
+            const empty = document.getElementById('transactionsEmpty');
+
+            // Calculate totals
+            const spent = transactions.filter(t => t.type === 'subscription' || t.type === 'unlock').reduce((sum, t) => sum + Math.abs(t.amount), 0);
+            const earned = transactions.filter(t => t.type === 'earning').reduce((sum, t) => sum + t.amount, 0);
+            
+            document.getElementById('totalSpent').textContent = '$' + spent.toFixed(2);
+            document.getElementById('totalEarned').textContent = '$' + earned.toFixed(2);
+
+            if (transactions.length === 0) {
+                container.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            empty.classList.add('hidden');
+            renderTransactions(transactions);
+        }
+
+        function renderTransactions(transactions) {
+            const container = document.getElementById('transactions');
+            
+            container.innerHTML = transactions.map(trans => {
+                const isPositive = trans.amount > 0;
+                const icon = trans.type === 'subscription' ? '👑' : trans.type === 'unlock' ? '🔓' : trans.type === 'earning' ? '💰' : '💳';
+                const color = isPositive ? 'text-holo-blue' : 'text-holo-gold';
+                
+                return `
+                <div class="stash-card flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="text-3xl">${icon}</div>
+                        <div>
+                            <div class="font-bold text-white">${trans.description}</div>
+                            <div class="text-xs text-gray-500 font-mono">${formatDate(trans.date)}</div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xl font-bold ${color}">
+                            ${isPositive ? '+' : '-'}$${Math.abs(trans.amount).toFixed(2)}
+                        </div>
+                        <div class="text-xs text-gray-500 uppercase">${trans.type}</div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function filterTransactions(filter) {
+            // Update active filter button
+            document.querySelectorAll('.trans-filter').forEach(btn => {
+                btn.classList.remove('active', 'bg-holo-blue', 'text-cyber-dark');
+                btn.classList.add('border', 'border-holo-purple', 'text-holo-purple');
+            });
+            event.target.classList.add('active', 'bg-holo-blue', 'text-cyber-dark');
+            event.target.classList.remove('border', 'border-holo-purple', 'text-holo-purple');
+
+            // Filter transactions
+            const transactions = JSON.parse(localStorage.getItem('hx_transactions') || '[]');
+            let filtered = transactions;
+
+            if (filter !== 'all') {
+                filtered = transactions.filter(t => t.type === filter || (filter === 'earnings' && t.type === 'earning'));
+            }
+
+            renderTransactions(filtered);
+        }
+
+        function loadVault() {
+            const passwords = JSON.parse(localStorage.getItem('hx_vaultPasswords') || '[]');
+            const container = document.getElementById('vaultPasswords');
+            const empty = document.getElementById('vaultEmpty');
+
+            if (passwords.length === 0) {
+                container.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            empty.classList.add('hidden');
+            container.innerHTML = passwords.map((pwd, index) => `
+                <div class="bg-cyber-dark bg-opacity-50 rounded-lg p-4 border-l-4 border-holo-gold">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="font-bold text-holo-gold">${pwd.videoTitle}</div>
+                        <button onclick="copyPassword('${pwd.password}', event)" class="text-holo-blue hover:text-holo-gold text-sm">
+                            📋 Copy
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs">
+                        <span class="text-gray-400">Video ID: <span class="text-holo-blue font-mono">${pwd.videoId}</span></span>
+                        <span class="text-gray-400">Type: <span class="text-holo-purple">${pwd.unlockType}</span></span>
+                    </div>
+                    <div class="mt-3 p-3 bg-cyber-gray rounded font-mono text-sm text-holo-gold border border-holo-gold border-opacity-30">
+                        ${pwd.password}
+                    </div>
+                    <div class="text-xs text-gray-500 mt-2">Saved: ${formatDate(pwd.savedAt)}</div>
+                </div>
+            `).join('');
+        }
+
+        function removeSaved(videoId, event) {
+            event.stopPropagation();
+            if (confirm('Remove this video from your saved list?')) {
+                let saved = JSON.parse(localStorage.getItem('hx_savedVideos') || '[]');
+                saved = saved.filter(v => v.id !== videoId);
+                localStorage.setItem('hx_savedVideos', JSON.stringify(saved));
+                loadSavedVideos();
+                updateCounts();
+            }
+        }
+
+        function viewContent(contentId) {
+            window.location.href = 'xrportalgallery.html';
+        }
+
+        function syncStash() {
+            const btn = event.target;
+            btn.textContent = '🔄 SYNCING...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                loadStashData();
+                btn.textContent = '🔄 SYNC';
+                btn.disabled = false;
+                showNotification('✅ Stash synchronized!');
+            }, 1000);
+        }
+
+        function applyMasterKey() {
+            const key = document.getElementById('masterKeyInput').value;
+            const MASTER_KEY = 'xr77master!';
+
+            if (key === MASTER_KEY) {
+                localStorage.setItem('hx_master_unlocked', 'true');
+                showNotification('✅ MASTER KEY ACTIVATED! All content permanently unlocked!');
+                document.getElementById('masterKeyInput').value = '';
+                
+                // Save to vault
+                const passwords = JSON.parse(localStorage.getItem('hx_vaultPasswords') || '[]');
+                if (!passwords.find(p => p.password === MASTER_KEY)) {
+                    passwords.push({
+                        videoId: 'ALL',
+                        videoTitle: 'MASTER KEY - All Content',
+                        password: MASTER_KEY,
+                        unlockType: 'MASTER',
+                        savedAt: new Date().toISOString()
+                    });
+                    localStorage.setItem('hx_vaultPasswords', JSON.stringify(passwords));
+                    loadVault();
+                }
+            } else {
+                showNotification('❌ Invalid master key');
+            }
+        }
+
+        function copyPassword(password, event) {
+            event.stopPropagation();
+            navigator.clipboard.writeText(password).then(() => {
+                showNotification('📋 Password copied to clipboard!');
+            });
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-24 right-4 px-6 py-4 bg-gradient-to-r from-holo-blue to-holo-purple rounded-lg font-cyber font-bold text-white z-50 animate-pulse-glow';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+
+            if (minutes < 1) return 'just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            if (days < 7) return `${days}d ago`;
+            return date.toLocaleDateString();
+        }
+
+        function formatTimeLeft(expiresAt) {
+            if (!expiresAt) return 'Permanent';
+            const timeLeft = expiresAt - Date.now();
+            if (timeLeft <= 0) return 'Expired';
+            
+            const hours = Math.floor(timeLeft / (60 * 60 * 1000));
+            const minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
+            
+            if (hours > 24) return `${Math.floor(hours/24)}d left`;
+            if (hours > 0) return `${hours}h ${minutes}m`;
+            return `${minutes}m left`;
+        }
+
+        // Generate sample data for testing
+        function generateSampleData() {
+            // Sample saved videos
+            const saved = [
+                {
+                    id: 'TITS001',
+                    title: 'Giant BBW TittyFuck',
+                    duration: '12:30',
+                    views: 4250,
+                    savedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+                }
+            ];
+            localStorage.setItem('hx_savedVideos', JSON.stringify(saved));
+
+            // Sample unlocked videos
+            const unlocked = [
+                {
+                    id: 'TITS002',
+                    title: 'My Big Titty Step Sister',
+                    duration: '15:45',
+                    views: 3890,
+                    unlockedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+                    expiresAt: Date.now() + 2 * 24 * 60 * 60 * 1000
+                }
+            ];
+            localStorage.setItem('hx_unlockedVideos', JSON.stringify(unlocked));
+
+            // Sample transactions
+            const transactions = [
+                {
+                    id: 'TXN001',
+                    type: 'subscription',
+                    description: 'HXMPA\' VIP Monthly Subscription',
+                    amount: -12.99,
+                    date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
+                },
+                {
+                    id: 'TXN002',
+                    type: 'earning',
+                    description: 'Custom Content Payment',
+                    amount: 45.50,
+                    date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString()
+                }
+            ];
+            localStorage.setItem('hx_transactions', JSON.stringify(transactions));
+
+            loadStashData();
+        }
+    </script>
+
+    <script src="floating-nav.js?v=1760664105"></script>
+    <script src="app.js?v=1760664105"></script>
+</body>
+</html>

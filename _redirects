@@ -1,0 +1,42 @@
+# Netlify Redirects for Hxmp Space
+
+# Redirect root to home page after splash
+/ /index.html 200
+
+# Handle missing pages - redirect to home
+/missing/* /xrhome.html 404
+
+# API redirects (for future backend integration)
+/api/* https://your-api-domain.com/api/:splat 200
+
+# Redirect old URLs (if migrating from another site)
+/home /xrhome.html 301
+/gallery /xrhxmpgallery.html 301
+/upload /xruploader.html 301
+/messages /xrmessaging.html 301
+/profile /xrmyhxmps.html 301
+/docs /xrdocs.html 301
+/pricing /xrmembership.html 301
+
+# Category-specific gallery redirects
+/category/thot-mommies /xrhxmpgallery.html?category=thot-mommies 301
+/category/bubble-butts /xrhxmpgallery.html?category=bubble-butts 301
+/category/premium-vault /xrhxmpgallery.html?category=premium-vault 301
+/category/tits /xrhxmpgallery.html?category=tits 301
+
+# Handle file extensions for clean URLs
+/about /xrabout.html 200
+/uploader /xruploader.html 200
+/messaging /xrmessaging.html 200
+/my-hxmps /xrmyhxmps.html 200
+/documentation /xrdocs.html 200
+/membership /xrmembership.html 200
+
+# Assets and static files
+/assets/* /assets/:splat 200
+/images/* /images/:splat 200
+/videos/* /videos/:splat 200
+/uploads/* /uploads/:splat 200
+
+# Serve 404 page for anything not found
+/* /xrhome.html 404

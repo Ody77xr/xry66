@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Video Player - Hump Heaven</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'holo-gold': '#FFD700',
+                        'holo-blue': '#00FFFF',
+                        'holo-purple': '#FF00FF',
+                        'cyber-dark': '#0A0A0F',
+                        'cyber-gray': '#1A1A2E'
+                    },
+                    fontFamily: {
+                        'cyber': ['Orbitron', 'monospace'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .holographic-text {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: holographic 3s ease-in-out infinite;
+        }
+        
+        @keyframes holographic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .glass-morphism {
+            background: rgba(26, 26, 46, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+        }
+        
+        .video-container iframe {
+            display: block;
+            width: 100%;
+            height: auto;
+            min-height: 60vh;
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .video-container iframe {
+                min-height: 50vh;
+            }
+        }
+        
+        html, body { 
+            overflow-x: hidden;
+            background: #0A0A0F;
+        }
+    </style>
+  <link rel="stylesheet" crossorigin href="/xry66/assets/floating-nav-Bd9a4gJc.css">
+</head>
+<body class="bg-cyber-dark text-white overflow-x-hidden min-h-screen pb-32">
+
+    <!-- Video Player Section -->
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        
+        <!-- Back Button -->
+        <div class="mb-6">
+            <a href="javascript:history.back()" class="inline-flex items-center gap-2 text-holo-blue hover:text-holo-gold transition-colors font-mono">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Back to Gallery
+            </a>
+        </div>
+
+        <!-- Video Title -->
+        <div class="mb-6">
+            <h1 id="videoTitle" class="text-3xl md:text-5xl font-cyber holographic-text mb-3">Loading...</h1>
+            <div class="flex flex-wrap gap-3 items-center">
+                <span id="videoCategory" class="badge badge-lg bg-holo-purple text-cyber-dark font-bold">Category</span>
+                <span id="videoDuration" class="text-holo-blue font-mono">0:00</span>
+                <span id="videoDate" class="text-gray-400 font-mono text-sm">Date</span>
+                <span id="videoViews" class="text-gray-400 font-mono text-sm">👁️ 0 views</span>
+            </div>
+        </div>
+
+        <!-- Video Player -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Main Video -->
+            <div class="lg:col-span-2">
+                <div id="videoPlayerContainer" class="video-container">
+                    <div class="flex items-center justify-center min-h-[60vh] text-holo-blue font-mono">
+                        Loading video player...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Info Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="glass-morphism rounded-xl p-6 space-y-4">
+                    <div>
+                        <h3 class="text-holo-gold font-cyber text-lg mb-2">VIDEO_INFO</h3>
+                        <div class="space-y-2 text-sm font-mono">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">ID:</span>
+                                <span id="videoId" class="text-holo-blue">---</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Category:</span>
+                                <span id="videoCategoryText" class="text-holo-purple">---</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Duration:</span>
+                                <span id="videoDurationText" class="text-holo-gold">---</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Views:</span>
+                                <span id="videoViewsText" class="text-holo-blue">---</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div>
+                        <h3 class="text-holo-gold font-cyber text-lg mb-2">TAGS</h3>
+                        <div id="videoTags" class="flex flex-wrap gap-2">
+                            <!-- Tags will be inserted here -->
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div>
+                        <h3 class="text-holo-gold font-cyber text-lg mb-2">ACTIONS</h3>
+                        <div class="space-y-2">
+                            <button onclick="shareVideo()" class="btn btn-sm btn-block glass-morphism border-holo-blue text-holo-blue">
+                                Share Video
+                            </button>
+                            <button onclick="reportVideo()" class="btn btn-sm btn-block glass-morphism border-gray-500 text-gray-400">
+                                Report Issue
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description Section -->
+        <div class="glass-morphism rounded-xl p-6 mb-8">
+            <h3 class="text-holo-gold font-cyber text-xl mb-4">DESCRIPTION</h3>
+            <p id="videoDescription" class="text-gray-300 leading-relaxed font-mono text-sm md:text-base">
+                Loading description...
+            </p>
+        </div>
+
+        <!-- Related Videos -->
+        <div class="mb-8">
+            <h3 class="text-holo-gold font-cyber text-2xl mb-6">RELATED_VIDEOS</h3>
+            <div id="relatedVideos" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Related videos will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="video-gallery.js?v=1760664105"></script>
+    <script>
+        // Get video ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoId = urlParams.get('id');
+
+        // Initialize video gallery to get video data
+        const videoGalleryInstance = new VideoGallery();
+        const videos = videoGalleryInstance.videos;
+
+        // Find the current video
+        const currentVideo = videos.find(v => v.id === videoId);
+
+        if (currentVideo) {
+            loadVideo(currentVideo);
+        } else {
+            document.getElementById('videoTitle').textContent = 'Video Not Found';
+            document.getElementById('videoPlayerContainer').innerHTML = '<div class="flex items-center justify-center min-h-[60vh] text-red-400 font-mono">Video not found. <a href="xrvideo-gallery.html" class="ml-2 text-holo-blue underline">Return to gallery</a></div>';
+        }
+
+        function loadVideo(video) {
+            // Set title and metadata
+            document.title = video.title + ' - Hump Heaven';
+            document.getElementById('videoTitle').textContent = video.title;
+            document.getElementById('videoCategory').textContent = video.category.toUpperCase().replace(/-/g, ' ');
+            document.getElementById('videoDuration').textContent = video.duration;
+            document.getElementById('videoDate').textContent = new Date(video.date).toLocaleDateString();
+            document.getElementById('videoViews').textContent = `👁️ ${video.views.toLocaleString()} views`;
+            
+            // Sidebar info
+            document.getElementById('videoId').textContent = video.id;
+            document.getElementById('videoCategoryText').textContent = video.category;
+            document.getElementById('videoDurationText').textContent = video.duration;
+            document.getElementById('videoViewsText').textContent = video.views.toLocaleString();
+            document.getElementById('videoDescription').textContent = video.description;
+
+            // Load video player
+            const playerContainer = document.getElementById('videoPlayerContainer');
+            playerContainer.innerHTML = video.embedCode;
+
+            // Add tags
+            const tagsContainer = document.getElementById('videoTags');
+            tagsContainer.innerHTML = video.tags.map(tag => 
+                `<span class="badge badge-sm bg-holo-blue bg-opacity-20 text-holo-blue border border-holo-blue">${tag}</span>`
+            ).join('');
+
+            // Load related videos
+            loadRelatedVideos(video);
+
+            // Increment view count (would normally be an API call)
+            incrementViews(video.id);
+        }
+
+        function loadRelatedVideos(currentVideo) {
+            const related = videos
+                .filter(v => v.id !== currentVideo.id && v.category === currentVideo.category)
+                .slice(0, 8);
+
+            const container = document.getElementById('relatedVideos');
+            container.innerHTML = related.map(v => `
+                <a href="xrvideo-player.html?id=${v.id}" class="block group">
+                    <div class="glass-morphism rounded-lg overflow-hidden hover:border-holo-gold border-2 border-transparent transition-all">
+                        <div class="aspect-video bg-gradient-to-br from-cyber-gray to-cyber-dark flex items-center justify-center">
+                            <svg class="w-12 h-12 text-holo-blue opacity-50 group-hover:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path>
+                            </svg>
+                        </div>
+                        <div class="p-3">
+                            <h4 class="font-cyber text-sm text-holo-gold line-clamp-2 mb-1">${v.title}</h4>
+                            <div class="flex justify-between text-xs text-gray-400 font-mono">
+                                <span>${v.duration}</span>
+                                <span>${v.views} views</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        function incrementViews(videoId) {
+            // Would normally be an API call
+            console.log('Incrementing views for:', videoId);
+        }
+
+        function shareVideo() {
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: currentVideo.title,
+                    text: currentVideo.description,
+                    url: url
+                }).catch(err => console.log('Share failed:', err));
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('Video link copied to clipboard!');
+                });
+            }
+        }
+
+        function reportVideo() {
+            alert('Report functionality would be implemented here. Contact support for issues.');
+        }
+
+        // Handle fullscreen exit - redirect back to site
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                console.log('Exited fullscreen, staying on video page');
+            }
+        });
+    </script>
+
+    <script src="floating-nav.js?v=1760664105"></script>
+<script src="app.js?v=1760664105"></script>
+</body>
+</html>

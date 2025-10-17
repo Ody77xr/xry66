@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Categories Mode - Hump Heaven</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'holo-gold': '#FFD700',
+            'holo-blue': '#00FFFF',
+            'holo-purple': '#FF00FF',
+            'holo-green': '#00FF00',
+            'cyber-dark': '#0A0A0F',
+            'cyber-gray': '#1A1A2E'
+          },
+          fontFamily: {
+            'cyber': ['Orbitron', 'monospace'],
+            'mono': ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .holographic-gradient{background:linear-gradient(45deg,#FF00FF,#00FFFF,#FFD700,#FF00FF);background-size:400% 400%;animation:holographic 4s ease-in-out infinite}
+    .holographic-text{background:linear-gradient(45deg,#FF00FF,#00FFFF,#FFD700);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:holographic 3s ease-in-out infinite}
+    .cyber-glow{box-shadow:0 0 20px rgba(0,255,255,.3),0 0 40px rgba(255,0,255,.2)}
+    .glass-morphism{background:rgba(26,26,46,.3);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1)}
+    @keyframes holographic{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    /* Mobile safety: prevent horizontal overflow and ensure responsive media */
+    html, body { overflow-x: hidden; }
+    img, video, iframe { max-width: 100%; height: auto; }
+    
+    /* Category Gallery Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .max-w-7xl {
+        max-width: 100% !important;
+        padding: 0 1rem !important;
+      }
+      
+      .text-3xl {
+        font-size: 1.8rem !important;
+      }
+      
+      .text-4xl {
+        font-size: 2rem !important;
+      }
+      
+      .text-6xl {
+        font-size: 2.5rem !important;
+      }
+      
+      .mockup-code {
+        max-width: 100% !important;
+        margin: 0 0.5rem !important;
+      }
+      
+      .grid-cols-3 {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+      
+      .gap-6 {
+        gap: 1rem !important;
+      }
+      
+      .mb-8 {
+        margin-bottom: 1.5rem !important;
+      }
+      
+      .mb-6 {
+        margin-bottom: 1rem !important;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .max-w-7xl {
+        padding: 0 0.5rem !important;
+      }
+      
+      .text-3xl {
+        font-size: 1.5rem !important;
+      }
+      
+      .text-4xl {
+        font-size: 1.7rem !important;
+      }
+      
+      .text-6xl {
+        font-size: 2rem !important;
+      }
+      
+      .grid-cols-3 {
+        grid-template-columns: 1fr !important;
+      }
+      
+      .gap-4 {
+        gap: 0.75rem !important;
+      }
+      
+      .mockup-code {
+        margin: 0 0.25rem !important;
+        font-size: 0.7rem !important;
+      }
+    }
+    
+    /* Category banner animations */
+    .category-banner-enter {
+      animation: categoryBannerSlideIn 0.6s ease-out forwards;
+    }
+    
+    @keyframes categoryBannerSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    /* Enhanced category banner hover effects */
+    .category-banner:hover .category-icon {
+      transform: scale(1.1) rotate(5deg);
+      transition: transform 0.3s ease;
+    }
+    
+    /* Floating category bubble styles */
+    .cat-bubble {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(26,26,46,0.35);
+      backdrop-filter: blur(12px);
+    }
+    
+    @keyframes floaty {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+    
+    .category-banner { animation: floaty 6s ease-in-out infinite; }
+    .category-banner:nth-child(2n) { animation-duration: 7s; }
+    .category-banner:nth-child(3n) { animation-duration: 8s; }
+  </style>
+  <link rel="stylesheet" crossorigin href="/xry66/assets/floating-nav-Bd9a4gJc.css">
+</head>
+<body class="bg-cyber-dark text-white overflow-x-hidden">
+
+  <!-- Layout -->
+  <div class="min-h-screen pt-8 pb-28 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-cyber-dark via-cyber-gray to-cyber-dark"></div>
+    <div class="absolute inset-0 holographic-gradient opacity-5 animate-pulse"></div>
+
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 relative z-10">
+      <!-- Header -->
+      <div class="text-center mb-6 lg:mb-10">
+        <h1 class="text-3xl sm:text-4xl lg:text-6xl font-cyber font-black holographic-text mb-2 lg:mb-3">CATEGORIES_MODE</h1>
+        <div class="text-base sm:text-lg lg:text-lg font-mono text-holo-blue">// Choose a category → subcategory → filter by tags</div>
+      </div>
+
+      <!-- Category Banner Selection (Initial View) -->
+      <div id="categoryBannerView" class="space-y-6">
+        <div class="text-center mb-8">
+          <div class="mockup-code glass-morphism max-w-md mx-auto text-xs sm:text-sm mb-6">
+            <pre data-prefix="$" class="text-holo-gold"><code>categories --list --available</code></pre>
+            <pre data-prefix=">" class="text-success"><code>LOADING CATEGORIES...</code></pre>
+            <pre data-prefix=">" class="text-holo-blue"><code>SELECT CATEGORY TO BROWSE</code></pre>
+          </div>
+          <!-- Debug button - remove after testing -->
+          <button onclick="window.categoryGallery && window.categoryGallery.testRender && window.categoryGallery.testRender()" class="btn btn-sm glass-morphism holographic-border font-cyber mb-4">
+            <span class="holographic-text text-xs">DEBUG_RELOAD_CATEGORIES</span>
+          </button>
+        </div>
+
+        <!-- Category Banners Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 min-h-[200px]" id="categoryBannersGrid">
+          <!-- Category banners will be populated by JS -->
+          <div class="col-span-full text-center font-mono text-gray-400 py-8" id="loadingIndicator">
+            <div class="holographic-text">LOADING_CATEGORIES...</div>
+            <div class="text-sm mt-2">Initializing category system</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Content View (Hidden Initially) -->
+      <div id="categoryContentView" class="hidden space-y-6">
+        <!-- Back Navigation -->
+        <div class="flex items-center justify-between mb-6">
+          <button id="backToCategoriesBtn" class="btn btn-sm lg:btn-md glass-morphism holographic-border font-cyber">
+            <svg class="w-4 h-4 lg:w-5 lg:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            <span class="holographic-text text-xs lg:text-sm">BACK_TO_CATEGORIES</span>
+          </button>
+          <div class="font-mono text-sm text-gray-300">
+            <span>ACTIVE_CATEGORY:</span>
+            <span id="activeCategory" class="holographic-text">NONE</span>
+          </div>
+        </div>
+
+        <!-- Category Controls -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
+          <!-- Category Info -->
+          <div class="lg:col-span-1 space-y-4">
+            <div class="glass-morphism cyber-glow rounded-xl p-4">
+              <h3 class="font-cyber text-holo-gold mb-3" id="categoryTitle">CATEGORY</h3>
+              <div id="categoryDescription" class="font-mono text-gray-300 text-sm mb-4">
+                <!-- Category description -->
+              </div>
+              <div id="categoryStats" class="space-y-2">
+                <!-- Category stats -->
+              </div>
+            </div>
+
+            <div class="glass-morphism rounded-xl p-4">
+              <h3 class="font-cyber text-holo-purple mb-2">SUBCATEGORIES</h3>
+              <div id="subcategoryChips" class="flex flex-wrap gap-2">
+                <!-- chips populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters + Results -->
+          <div class="lg:col-span-3 space-y-6">
+            <div class="glass-morphism rounded-xl p-4 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+              <div class="font-mono text-sm text-gray-300">
+                <span>FILTER_MODE:</span>
+                <span id="filterMode" class="text-holo-blue">ALL_CONTENT</span>
+              </div>
+              <div class="join w-full md:w-auto">
+                <input id="tagSearch" class="input input-sm lg:input-md input-bordered join-item w-full md:w-80" placeholder="Search tags e.g., premium, exclusive, featured" />
+                <button id="clearFilters" class="btn btn-sm lg:btn-md join-item">Clear</button>
+              </div>
+            </div>
+
+            <div id="resultsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+              <!-- cards populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HXMP Video Player Modal -->
+  <div class="modal" id="hxmpVideoPlayer">
+    <div class="modal-box max-w-7xl glass-morphism cyber-glow">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-cyber text-xl holographic-text" id="videoPlayerTitle"></h3>
+        <button class="btn btn-sm btn-circle glass-morphism cyber-glow" onclick="closeVideoPlayer()">
+          <span class="holographic-text text-lg">✕</span>
+        </button>
+      </div>
+      <div class="aspect-video bg-cyber-gray rounded-lg mb-4 overflow-hidden cyber-glow" id="videoPlayerIframe"></div>
+      <div class="bg-cyber-gray/50 p-4 rounded-lg">
+        <p id="videoPlayerDescription" class="font-mono text-gray-300 mb-4"></p>
+        <div class="flex flex-wrap justify-center gap-4 text-sm font-mono">
+          <div class="badge holographic-gradient text-cyber-dark font-bold" id="videoIdDisplay"></div>
+          <div class="badge badge-outline border-holo-blue text-holo-blue" id="videoCategoryDisplay"></div>
+          <div class="badge badge-outline border-holo-purple text-holo-purple" id="videoDurationDisplay"></div>
+        </div>
+      </div>
+    </div>
+    <label class="modal-backdrop" for="hxmpVideoPlayer" onclick="closeVideoPlayer()"></label>
+  </div>
+
+
+  <script src="floating-nav.js?v=1760664105"></script>
+<script src="app.js?v=1760664105"></script>
+  <script src="video-gallery.js?v=1760664105"></script>
+  <script src="hxmp-video-player.js?v=1760664105"></script>
+  <script src="access-control.js?v=1760664105"></script>
+  <script src="category-gallery.js?v=1760664105"></script>
+</body>
+</html>

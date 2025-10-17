@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Portal Gallery - Hump Heaven</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'holo-gold': '#FFD700',
+                        'holo-blue': '#00FFFF',
+                        'holo-purple': '#FF00FF',
+                        'cyber-dark': '#0A0A0F',
+                        'cyber-gray': '#1A1A2E'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .holographic-text {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: holographic 3s ease-in-out infinite;
+        }
+        
+        @keyframes holographic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .glass-morphism {
+            background: rgba(26, 26, 46, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+        
+        .cyber-glow {
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3), 0 0 60px rgba(255, 0, 255, 0.2);
+        }
+        
+        html, body { overflow-x: hidden; background: #0A0A0F; }
+    </style>
+  <link rel="stylesheet" crossorigin href="/xry66/assets/floating-nav-Bd9a4gJc.css">
+</head>
+<body class="bg-cyber-dark text-white overflow-x-hidden pb-32">
+
+    <!-- Secure Access Check -->
+    <div id="accessDenied" class="hidden min-h-screen flex items-center justify-center">
+        <div class="glass-morphism rounded-3xl p-12 text-center max-w-lg cyber-glow">
+            <div class="text-6xl mb-6">🔒</div>
+            <h1 class="text-4xl font-cyber holographic-text mb-4">ACCESS RESTRICTED</h1>
+            <p class="text-gray-300 font-mono mb-8">
+                This portal is only accessible to HXMPA' VIP members who have uploaded content.
+            </p>
+            <div class="space-y-3">
+                <a href="xrmembership.html" class="block py-3 bg-gradient-to-r from-holo-gold to-holo-purple rounded-lg font-cyber font-bold text-cyber-dark">
+                    Upgrade to VIP
+                </a>
+                <a href="xrhome.html" class="block py-3 border border-holo-blue text-holo-blue rounded-lg font-cyber hover:bg-holo-blue hover:text-cyber-dark transition-all">
+                    Return Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portal Gallery (Authorized) -->
+    <div id="portalContent" class="hidden">
+        
+        <!-- Header -->
+        <div class="bg-gradient-to-br from-cyber-dark via-cyber-gray to-cyber-dark border-b border-holo-gold" style="padding: 4rem 0 2rem;">
+            <div class="container mx-auto px-4 max-w-7xl">
+                <div class="flex items-center justify-between flex-wrap gap-4">
+                    <div>
+                        <h1 class="text-4xl md:text-5xl font-cyber holographic-text mb-2">MY PORTAL GALLERY</h1>
+                        <div class="text-sm font-mono text-gray-400">🔒 Secure Creator Content Storage</div>
+                    </div>
+                    <a href="xrmembership.html" class="px-6 py-3 border border-holo-blue text-holo-blue rounded-lg font-cyber hover:bg-holo-blue hover:text-cyber-dark transition-all">
+                        ← Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter/Stats Bar -->
+        <div class="container mx-auto px-4 max-w-7xl mt-8 mb-6">
+            <div class="glass-morphism rounded-2xl p-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-holo-blue" id="totalUploads">0</div>
+                        <div class="text-xs text-gray-400">Total Uploads</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-holo-purple" id="totalViews">0</div>
+                        <div class="text-xs text-gray-400">Total Views</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-holo-gold" id="totalLikes">0</div>
+                        <div class="text-xs text-gray-400">Total Likes</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-holo-blue" id="totalEarned">$0.00</div>
+                        <div class="text-xs text-gray-400">Earnings</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-3 mt-6">
+                    <button onclick="filterContent('all')" class="filter-btn active px-4 py-2 rounded-lg font-mono text-sm bg-holo-blue text-cyber-dark font-bold">
+                        All
+                    </button>
+                    <button onclick="filterContent('videos')" class="filter-btn px-4 py-2 rounded-lg font-mono text-sm border border-holo-blue text-holo-blue hover:bg-holo-blue hover:text-cyber-dark transition-all">
+                        Videos
+                    </button>
+                    <button onclick="filterContent('photos')" class="filter-btn px-4 py-2 rounded-lg font-mono text-sm border border-holo-purple text-holo-purple hover:bg-holo-purple hover:text-cyber-dark transition-all">
+                        Photos
+                    </button>
+                    <button onclick="filterContent('pending')" class="filter-btn px-4 py-2 rounded-lg font-mono text-sm border border-holo-gold text-holo-gold hover:bg-holo-gold hover:text-cyber-dark transition-all">
+                        Pending Review
+                    </button>
+                    <button onclick="filterContent('approved')" class="filter-btn px-4 py-2 rounded-lg font-mono text-sm border border-green-500 text-green-500 hover:bg-green-500 hover:text-cyber-dark transition-all">
+                        Approved
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="container mx-auto px-4 max-w-7xl mb-8">
+            <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Content will be loaded here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="text-center py-20">
+                <div class="glass-morphism rounded-3xl p-12 max-w-lg mx-auto">
+                    <div class="text-6xl mb-6">📤</div>
+                    <h3 class="text-2xl font-cyber text-holo-gold mb-4">No Uploads Yet</h3>
+                    <p class="text-gray-300 font-mono mb-8">
+                        Start uploading your HXMP content to build your portfolio and start earning!
+                    </p>
+                    <a href="xruploader.html" class="inline-block px-8 py-4 bg-gradient-to-r from-holo-blue to-holo-purple rounded-full font-cyber font-bold hover:scale-105 transition-transform">
+                        Upload Your First Video
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Security check
+        const isLoggedIn = localStorage.getItem('hx_isLoggedIn') === 'true';
+        const userTier = localStorage.getItem('hx_memberTier') || 'free';
+        const userUploads = JSON.parse(localStorage.getItem('hx_userUploads') || '[]');
+
+        if (!isLoggedIn || userTier !== 'vip') {
+            // Access denied
+            document.getElementById('accessDenied').classList.remove('hidden');
+            document.getElementById('portalContent').classList.add('hidden');
+        } else {
+            // Show portal
+            document.getElementById('accessDenied').classList.add('hidden');
+            document.getElementById('portalContent').classList.remove('hidden');
+            loadPortalGallery();
+        }
+
+        function loadPortalGallery() {
+            const uploads = JSON.parse(localStorage.getItem('hx_userUploads') || '[]');
+            
+            // Update stats
+            document.getElementById('totalUploads').textContent = uploads.length;
+            const totalViews = uploads.reduce((sum, item) => sum + (item.views || 0), 0);
+            const totalLikes = uploads.reduce((sum, item) => sum + (item.likes || 0), 0);
+            const totalEarned = uploads.reduce((sum, item) => sum + (item.earnings || 0), 0);
+            
+            document.getElementById('totalViews').textContent = totalViews.toLocaleString();
+            document.getElementById('totalLikes').textContent = totalLikes.toLocaleString();
+            document.getElementById('totalEarned').textContent = '$' + totalEarned.toFixed(2);
+
+            if (uploads.length === 0) {
+                document.getElementById('emptyState').classList.remove('hidden');
+                document.getElementById('galleryGrid').classList.add('hidden');
+            } else {
+                document.getElementById('emptyState').classList.add('hidden');
+                document.getElementById('galleryGrid').classList.remove('hidden');
+                renderGallery(uploads);
+            }
+        }
+
+        function renderGallery(uploads) {
+            const grid = document.getElementById('galleryGrid');
+            
+            grid.innerHTML = uploads.map(item => `
+                <div class="glass-morphism rounded-xl overflow-hidden hover:border-holo-gold border-2 border-transparent transition-all cursor-pointer group" onclick="viewUpload('${item.id}')">
+                    <div class="aspect-video bg-gradient-to-br from-cyber-gray to-cyber-dark flex items-center justify-center relative">
+                        ${item.type === 'video' ? 
+                            '<svg class="w-16 h-16 text-holo-blue opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path></svg>' :
+                            '<svg class="w-16 h-16 text-holo-purple opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path></svg>'
+                        }
+                        <div class="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold ${item.status === 'approved' ? 'bg-green-500 text-white' : item.status === 'pending' ? 'bg-yellow-500 text-cyber-dark' : 'bg-red-500 text-white'}">
+                            ${item.status.toUpperCase()}
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-sm text-holo-gold mb-2 line-clamp-2 group-hover:text-holo-blue transition-colors">${item.title}</h4>
+                        <div class="flex justify-between text-xs text-gray-400 mb-2">
+                            <span>👁️ ${item.views || 0}</span>
+                            <span>👍 ${item.likes || 0}</span>
+                        </div>
+                        <div class="text-xs text-holo-gold font-mono">
+                            Earned: $${(item.earnings || 0).toFixed(2)}
+                        </div>
+                        <div class="text-xs text-gray-500 mt-2">
+                            ${new Date(item.uploadedAt).toLocaleDateString()}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterContent(filter) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-holo-blue', 'text-cyber-dark', 'font-bold');
+                btn.classList.add('border', 'border-holo-blue', 'text-holo-blue');
+            });
+            event.target.classList.add('active', 'bg-holo-blue', 'text-cyber-dark', 'font-bold');
+            event.target.classList.remove('border', 'border-holo-blue', 'text-holo-blue');
+
+            // Filter logic
+            const uploads = JSON.parse(localStorage.getItem('hx_userUploads') || '[]');
+            let filtered = uploads;
+
+            if (filter === 'videos') {
+                filtered = uploads.filter(item => item.type === 'video');
+            } else if (filter === 'photos') {
+                filtered = uploads.filter(item => item.type === 'photo');
+            } else if (filter === 'pending') {
+                filtered = uploads.filter(item => item.status === 'pending');
+            } else if (filter === 'approved') {
+                filtered = uploads.filter(item => item.status === 'approved');
+            }
+
+            renderGallery(filtered);
+        }
+
+        function viewUpload(uploadId) {
+            const uploads = JSON.parse(localStorage.getItem('hx_userUploads') || '[]');
+            const upload = uploads.find(u => u.id === uploadId);
+            
+            if (!upload) return;
+
+            alert(`
+📊 Upload Details:
+
+Title: ${upload.title}
+Type: ${upload.type}
+Status: ${upload.status}
+Views: ${upload.views || 0}
+Likes: ${upload.likes || 0}
+Earnings: $${(upload.earnings || 0).toFixed(2)}
+Uploaded: ${new Date(upload.uploadedAt).toLocaleDateString()}
+
+Full viewer coming soon!
+            `);
+        }
+
+        // Sample data generator (for demo)
+        function generateSampleData() {
+            if (confirm('Generate sample uploads for demo purposes?')) {
+                const samples = [
+                    {
+                        id: 'UPLOAD001',
+                        title: 'Dry Hump Session POV',
+                        type: 'video',
+                        status: 'approved',
+                        views: 1250,
+                        likes: 89,
+                        earnings: 45.50,
+                        uploadedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+                    },
+                    {
+                        id: 'UPLOAD002',
+                        title: 'Panties Wedgie Compilation',
+                        type: 'video',
+                        status: 'approved',
+                        views: 890,
+                        likes: 67,
+                        earnings: 32.75,
+                        uploadedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
+                    },
+                    {
+                        id: 'UPLOAD003',
+                        title: 'Dimpled Assmeat Tease',
+                        type: 'photo',
+                        status: 'approved',
+                        views: 2340,
+                        likes: 156,
+                        earnings: 78.90,
+                        uploadedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString()
+                    },
+                    {
+                        id: 'UPLOAD004',
+                        title: 'Custom Request - Grinding Session',
+                        type: 'video',
+                        status: 'pending',
+                        views: 0,
+                        likes: 0,
+                        earnings: 0,
+                        uploadedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+                    }
+                ];
+
+                localStorage.setItem('hx_userUploads', JSON.stringify(samples));
+                location.reload();
+            }
+        }
+    </script>
+
+    <script src="floating-nav.js?v=1760664105"></script>
+    <script src="app.js?v=1760664105"></script>
+
+    <!-- Debug Helper -->
+    <script>
+        // Add sample data button for testing (remove in production)
+        if (document.getElementById('portalContent') && !document.getElementById('portalContent').classList.contains('hidden')) {
+            const debugBtn = document.createElement('button');
+            debugBtn.textContent = '🔧 Generate Sample Data';
+            debugBtn.className = 'fixed bottom-32 right-4 px-4 py-2 bg-yellow-500 text-black rounded-lg text-xs font-bold z-50';
+            debugBtn.onclick = generateSampleData;
+            document.body.appendChild(debugBtn);
+        }
+    </script>
+</body>
+</html>

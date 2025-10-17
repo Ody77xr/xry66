@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Hxmp Space - Messages</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" crossorigin href="/xry66/assets/styles-r96WPiRz.css">
+  <link rel="stylesheet" crossorigin href="/xry66/assets/floating-nav-Bd9a4gJc.css">
+</head>
+<body>
+
+    <!-- Messaging Interface -->
+    <div class="gallery-container" style="margin-top: 20px; padding: 1rem 0; height: calc(100vh - 20px);">
+        <div class="container" style="height: 100%; max-width: 1400px;">
+            <div style="display: grid; grid-template-columns: 300px 1fr; height: 100%; gap: 1rem; background: #2d2d2d; border-radius: 20px; overflow: hidden;">
+                
+                <!-- Sidebar - Conversations List -->
+                <div style="background: #1a1a1a; padding: 1rem; border-right: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div style="margin-bottom: 1rem;">
+                        <h2 style="color: #fff; margin-bottom: 1rem; font-size: 1.5rem;">Messages</h2>
+                        <button style="
+                            width: 100%;
+                            padding: 0.8rem;
+                            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+                            color: #fff;
+                            border: none;
+                            border-radius: 10px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            margin-bottom: 1rem;
+                        ">New Message</button>
+                        <input type="text" placeholder="Search conversations..." style="
+                            width: 100%;
+                            padding: 0.8rem;
+                            background: #2d2d2d;
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 10px;
+                            color: #fff;
+                            margin-bottom: 1rem;
+                        ">
+                    </div>
+                    
+                    <!-- Conversations List -->
+                    <div id="conversationsList" style="overflow-y: auto; height: calc(100% - 200px);">
+                        <div class="conversation-item" data-user="Creator_Jane" style="
+                            padding: 1rem;
+                            border-radius: 10px;
+                            margin-bottom: 0.5rem;
+                            cursor: pointer;
+                            transition: background 0.3s ease;
+                            background: rgba(78, 205, 196, 0.1);
+                            border: 1px solid rgba(78, 205, 196, 0.3);
+                        ">
+                            <div style="display: flex; align-items: center; gap: 0.8rem;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(45deg, #4ecdc4, #44a08d); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold;">
+                                    CJ
+                                </div>
+                                <div style="flex: 1;">
+                                    <h4 style="color: #fff; margin: 0; font-size: 0.9rem;">Creator_Jane</h4>
+                                    <p style="color: rgba(255, 255, 255, 0.7); margin: 0; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        Thanks for the feedback on my latest upload!
+                                    </p>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: end;">
+                                    <span style="color: rgba(255, 255, 255, 0.5); font-size: 0.7rem;">2m</span>
+                                    <div style="width: 8px; height: 8px; background: #4ecdc4; border-radius: 50%; margin-top: 2px;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="conversation-item" data-user="ArtistMike" style="
+                            padding: 1rem;
+                            border-radius: 10px;
+                            margin-bottom: 0.5rem;
+                            cursor: pointer;
+                            transition: background 0.3s ease;
+                            background: rgba(255, 255, 255, 0.05);
+                        ">
+                            <div style="display: flex; align-items: center; gap: 0.8rem;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(45deg, #ff6b6b, #ee5a52); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold;">
+                                    AM
+                                </div>
+                                <div style="flex: 1;">
+                                    <h4 style="color: #fff; margin: 0; font-size: 0.9rem;">ArtistMike</h4>
+                                    <p style="color: rgba(255, 255, 255, 0.7); margin: 0; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        Hey! Loved your latest gallery addition
+                                    </p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span style="color: rgba(255, 255, 255, 0.5); font-size: 0.7rem;">1h</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="conversation-item" data-user="ContentCrafter" style="
+                            padding: 1rem;
+                            border-radius: 10px;
+                            margin-bottom: 0.5rem;
+                            cursor: pointer;
+                            transition: background 0.3s ease;
+                            background: rgba(255, 255, 255, 0.05);
+                        ">
+                            <div style="display: flex; align-items: center; gap: 0.8rem;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(45deg, #9b59b6, #8e44ad); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold;">
+                                    CC
+                                </div>
+                                <div style="flex: 1;">
+                                    <h4 style="color: #fff; margin: 0; font-size: 0.9rem;">ContentCrafter</h4>
+                                    <p style="color: rgba(255, 255, 255, 0.7); margin: 0; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        Collaboration opportunity?
+                                    </p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span style="color: rgba(255, 255, 255, 0.5); font-size: 0.7rem;">3h</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Area -->
+                <div style="display: flex; flex-direction: column; height: 100%;">
+                    <!-- Chat Header -->
+                    <div style="padding: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); background: #1a1a1a;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 50px; height: 50px; background: linear-gradient(45deg, #4ecdc4, #44a08d); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 1.2rem;">
+                                CJ
+                            </div>
+                            <div>
+                                <h3 style="color: #fff; margin: 0; font-size: 1.2rem;" id="chatUserName">Creator_Jane</h3>
+                                <p style="color: #4ecdc4; margin: 0; font-size: 0.9rem;">Online</p>
+                            </div>
+                            <div style="margin-left: auto; display: flex; gap: 0.5rem;">
+                                <button style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer;">📞</button>
+                                <button style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer;">📹</button>
+                                <button style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer;">⚙️</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Messages Area -->
+                    <div id="messagesArea" style="flex: 1; padding: 1rem; overflow-y: auto; background: #2d2d2d;">
+                        <!-- Sample Messages -->
+                        <div style="margin-bottom: 1rem;">
+                            <div style="display: flex; align-items: end; gap: 0.5rem; margin-bottom: 1rem;">
+                                <div style="width: 35px; height: 35px; background: linear-gradient(45deg, #4ecdc4, #44a08d); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 0.8rem;">
+                                    CJ
+                                </div>
+                                <div style="max-width: 70%; background: rgba(78, 205, 196, 0.2); padding: 0.8rem 1rem; border-radius: 15px 15px 15px 5px; border: 1px solid rgba(78, 205, 196, 0.3);">
+                                    <p style="color: #fff; margin: 0; line-height: 1.4;">Hey! Thanks for the feedback on my latest upload. Really appreciate the support! 🙏</p>
+                                    <span style="color: rgba(255, 255, 255, 0.5); font-size: 0.7rem;">2:34 PM</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 1rem;">
+                            <div style="display: flex; align-items: end; gap: 0.5rem; justify-content: flex-end; margin-bottom: 1rem;">
+                                <div style="max-width: 70%; background: linear-gradient(45deg, #ff6b6b, #ee5a52); padding: 0.8rem 1rem; border-radius: 15px 15px 5px 15px;">
+                                    <p style="color: #fff; margin: 0; line-height: 1.4;">Your content is amazing! Looking forward to more collaborations.</p>
+                                    <span style="color: rgba(255, 255, 255, 0.8); font-size: 0.7rem; float: right;">2:35 PM</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 1rem;">
+                            <div style="display: flex; align-items: end; gap: 0.5rem; margin-bottom: 1rem;">
+                                <div style="width: 35px; height: 35px; background: linear-gradient(45deg, #4ecdc4, #44a08d); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 0.8rem;">
+                                    CJ
+                                </div>
+                                <div style="max-width: 70%; background: rgba(78, 205, 196, 0.2); padding: 0.8rem 1rem; border-radius: 15px 15px 15px 5px; border: 1px solid rgba(78, 205, 196, 0.3);">
+                                    <p style="color: #fff; margin: 0; line-height: 1.4;">Absolutely! I have some new ideas we could work on together. 💡</p>
+                                    <span style="color: rgba(255, 255, 255, 0.5); font-size: 0.7rem;">2:36 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Message Input -->
+                    <div style="padding: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); background: #1a1a1a;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <button style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; padding: 0.8rem; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                                📎
+                            </button>
+                            <input type="text" id="messageInput" placeholder="Type a message..." style="
+                                flex: 1;
+                                padding: 1rem;
+                                background: #2d2d2d;
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 25px;
+                                color: #fff;
+                                font-size: 1rem;
+                            ">
+                            <button id="sendButton" style="
+                                background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+                                border: none;
+                                color: #fff;
+                                padding: 1rem;
+                                border-radius: 50%;
+                                cursor: pointer;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 1.2rem;
+                            ">➤</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const conversationItems = document.querySelectorAll('.conversation-item');
+            const messagesArea = document.getElementById('messagesArea');
+            const messageInput = document.getElementById('messageInput');
+            const sendButton = document.getElementById('sendButton');
+            const chatUserName = document.getElementById('chatUserName');
+
+            // Conversation switching
+            conversationItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active state from all items
+                    conversationItems.forEach(conv => {
+                        conv.style.background = 'rgba(255, 255, 255, 0.05)';
+                        conv.style.border = 'none';
+                    });
+                    
+                    // Add active state to clicked item
+                    this.style.background = 'rgba(78, 205, 196, 0.1)';
+                    this.style.border = '1px solid rgba(78, 205, 196, 0.3)';
+                    
+                    // Update chat header
+                    const userName = this.dataset.user;
+                    chatUserName.textContent = userName;
+                    
+                    // Clear messages and load conversation (demo)
+                    loadConversation(userName);
+                });
+            });
+
+            function loadConversation(userName) {
+                // Demo conversation loading
+                messagesArea.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: rgba(255, 255, 255, 0.5);">
+                        <p>Started conversation with ${userName}</p>
+                    </div>
+                `;
+            }
+
+            // Send message functionality
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (message) {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.style.cssText = 'margin-bottom: 1rem;';
+                    messageDiv.innerHTML = `
+                        <div style="display: flex; align-items: end; gap: 0.5rem; justify-content: flex-end; margin-bottom: 1rem;">
+                            <div style="max-width: 70%; background: linear-gradient(45deg, #ff6b6b, #ee5a52); padding: 0.8rem 1rem; border-radius: 15px 15px 5px 15px;">
+                                <p style="color: #fff; margin: 0; line-height: 1.4;">${message}</p>
+                                <span style="color: rgba(255, 255, 255, 0.8); font-size: 0.7rem; float: right;">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                            </div>
+                        </div>
+                    `;
+                    messagesArea.appendChild(messageDiv);
+                    messageInput.value = '';
+                    messagesArea.scrollTop = messagesArea.scrollHeight;
+                }
+            }
+
+            sendButton.addEventListener('click', sendMessage);
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Auto-scroll to bottom
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        });
+    </script>
+    <script src="floating-nav.js?v=1760664105"></script>
+<script src="app.js?v=1760664105"></script>
+</body>
+</html>

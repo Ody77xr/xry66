@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Video Player - Hump Heaven</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'holo-gold': '#FFD700',
+                        'holo-blue': '#00FFFF',
+                        'holo-purple': '#FF00FF',
+                        'cyber-dark': '#0A0A0F',
+                        'cyber-gray': '#1A1A2E'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: #0A0A0F;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: hidden;
+        }
+
+        .holographic-text {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: holographic 4s ease-in-out infinite;
+        }
+
+        @keyframes holographic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .cyber-glow {
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), 
+                        0 0 60px rgba(255, 0, 255, 0.2),
+                        inset 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .glass-panel {
+            background: rgba(26, 26, 46, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 16px;
+        }
+
+        /* Video Wrapper - Cinematic Experience */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(10, 10, 15, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 0 80px rgba(0, 255, 255, 0.3),
+                        0 0 120px rgba(255, 0, 255, 0.2),
+                        inset 0 2px 0 rgba(255, 215, 0, 0.2);
+        }
+
+        .video-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Cinematic Video Container */
+        .cinema-container {
+            position: relative;
+            width: 100%;
+            background: #000;
+            border-radius: 16px 16px 0 0;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .video-canvas {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background: linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 100%);
+            min-height: 600px;
+        }
+
+        .video-canvas iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Decorative Frame */
+        .cinema-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .cinema-frame::before,
+        .cinema-frame::after {
+            content: '';
+            position: absolute;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(0, 255, 255, 0.3) 50%, 
+                transparent 100%);
+            height: 2px;
+            left: 0;
+            right: 0;
+        }
+
+        .cinema-frame::before { top: 0; }
+        .cinema-frame::after { bottom: 0; }
+
+        /* Video Info Panel */
+        .video-info-panel {
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+            background: linear-gradient(180deg, rgba(10, 10, 15, 0.98) 0%, rgba(26, 26, 46, 0.95) 100%);
+            border-top: 2px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .stat-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: #00FFFF;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2));
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            border-radius: 12px;
+            color: #00FFFF;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.4), rgba(255, 0, 255, 0.4));
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .action-btn.active {
+            background: linear-gradient(45deg, #00FFFF, #FF00FF);
+            color: #0A0A0F;
+            border-color: #FFD700;
+        }
+
+        /* Comments Section */
+        .comment-item {
+            padding: 1rem;
+            background: rgba(26, 26, 46, 0.3);
+            border-left: 3px solid rgba(0, 255, 255, 0.5);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .comment-item:hover {
+            background: rgba(26, 26, 46, 0.5);
+            border-left-color: #00FFFF;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 0, 255, 0.2);
+            border: 1px solid rgba(255, 0, 255, 0.5);
+            border-radius: 16px;
+            font-size: 0.75rem;
+            color: #FF00FF;
+            margin: 0.25rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .video-canvas {
+                min-height: 400px;
+            }
+            .video-info-panel {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .video-canvas {
+                min-height: 300px;
+                padding-bottom: 75%;
+            }
+            .video-wrapper {
+                border-radius: 16px;
+            }
+            .video-info-panel {
+                padding: 1rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Scroll Bar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(26, 26, 46, 0.3); }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, #00FFFF, #FF00FF); 
+            border-radius: 4px;
+        }
+    </style>
+  <link rel="stylesheet" crossorigin href="/xry66/assets/floating-nav-Bd9a4gJc.css">
+</head>
+<body class="pb-32">
+
+    <!-- Top Navigation Bar -->
+    <div class="fixed top-0 left-0 right-0 z-50 bg-cyber-dark bg-opacity-95 backdrop-blur-lg border-b border-holo-blue border-opacity-30">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="xrvideo-gallery.html" class="flex items-center gap-2 text-holo-blue hover:text-holo-gold transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                <span class="font-bold hidden sm:inline">Back to Gallery</span>
+            </a>
+            <div class="text-holo-gold font-bold" style="font-family: 'Orbitron', monospace;">
+                HUMP HEAVEN
+            </div>
+            <div class="w-24"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 pt-24 pb-8 max-w-7xl">
+        
+        <!-- Video Wrapper with Cinematic Experience -->
+        <div class="video-wrapper mb-8 cyber-glow">
+            
+            <!-- Cinema Container -->
+            <div class="cinema-container">
+                <div class="video-canvas" id="videoCanvas">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center loading-pulse">
+                            <div class="text-holo-blue text-4xl mb-4">▶</div>
+                            <div class="text-holo-blue font-bold">LOADING VIDEO...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cinema-frame"></div>
+            </div>
+
+            <!-- Video Info Panel -->
+            <div class="video-info-panel">
+                
+                <!-- Title -->
+                <h1 id="videoTitle" class="text-3xl md:text-4xl lg:text-5xl font-bold holographic-text mb-4" style="font-family: 'Orbitron', monospace;">
+                    Loading Video...
+                </h1>
+
+                <!-- Stats Row -->
+                <div class="flex flex-wrap gap-3 mb-6">
+                    <span id="videoDuration" class="stat-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>0:00</span>
+                    </span>
+                    <span id="videoViews" class="stat-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>0 views</span>
+                    </span>
+                    <span id="videoDate" class="stat-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Date</span>
+                    </span>
+                    <span id="videoCategory" class="stat-badge" style="background: rgba(255, 0, 255, 0.2); border-color: rgba(255, 0, 255, 0.5); color: #FF00FF;">
+                        <span>Category</span>
+                    </span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-3 mb-6">
+                    <button id="likeBtn" class="action-btn" onclick="toggleLike()">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+                        </svg>
+                        <span id="likeCount">0</span>
+                    </button>
+                    <button id="dislikeBtn" class="action-btn" onclick="toggleDislike()">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"></path>
+                        </svg>
+                        <span id="dislikeCount">0</span>
+                    </button>
+                    <button class="action-btn" onclick="shareVideo()">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                        </svg>
+                        Share
+                    </button>
+                    <button id="saveBtn" class="action-btn" onclick="toggleSave()">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+                        </svg>
+                        <span id="saveBtnText">Save</span>
+                    </button>
+                </div>
+
+                <!-- Tags -->
+                <div id="videoTags" class="mb-6">
+                    <!-- Tags will be inserted here -->
+                </div>
+
+                <!-- Description -->
+                <div class="glass-panel p-4 mb-6">
+                    <h3 class="text-holo-gold font-bold mb-3 text-lg" style="font-family: 'Orbitron', monospace;">DESCRIPTION</h3>
+                    <p id="videoDescription" class="text-gray-300 leading-relaxed">
+                        Loading description...
+                    </p>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="glass-panel p-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-holo-gold font-bold text-lg" style="font-family: 'Orbitron', monospace;">
+                            COMMENTS <span id="commentCount" class="text-holo-blue">(0)</span>
+                        </h3>
+                    </div>
+
+                    <!-- Add Comment -->
+                    <div class="mb-6">
+                        <textarea 
+                            id="commentInput" 
+                            placeholder="Add a comment..." 
+                            class="w-full bg-cyber-gray bg-opacity-50 border border-holo-blue border-opacity-30 rounded-lg p-3 text-white placeholder-gray-500 focus:border-holo-blue focus:outline-none resize-none"
+                            rows="3"
+                        ></textarea>
+                        <div class="flex justify-end mt-2">
+                            <button onclick="postComment()" class="action-btn">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                </svg>
+                                Post Comment
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Comments List -->
+                    <div id="commentsList" class="space-y-3">
+                        <!-- Comments will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Videos -->
+        <div>
+            <h3 class="text-2xl font-bold holographic-text mb-6" style="font-family: 'Orbitron', monospace;">
+                RELATED VIDEOS
+            </h3>
+            <div id="relatedVideos" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Related videos will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="video-gallery.js?v=1760664105"></script>
+    <script src="comments.js?v=1"></script>
+    <script>
+        // Initialize CommentsAPI with provided JsonBin API key (uses CommentsAPI fallback to localStorage if remote fails)
+        if (window.CommentsAPI) {
+            window.CommentsAPI.init({ apiKey: '$2a$10$gynJ8PtALvMlYQJHLJUGBe1rQvoz9MI1XzrcolgTRmA4axwoQlo4a' });
+        }
+    </script>
+    <script>
+        // Get video ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoId = urlParams.get('id');
+
+        // Initialize video gallery
+        const videoGalleryInstance = new VideoGallery();
+        const videos = videoGalleryInstance.videos;
+        const currentVideo = videos.find(v => v.id === videoId);
+
+        // Video state
+        let liked = false;
+        let disliked = false;
+        let likes = 0;
+        let dislikes = 0;
+        let comments = [];
+        let isSaved = false;
+
+        // Load video data
+        if (currentVideo) {
+            loadVideo(currentVideo);
+            loadFromLocalStorage();
+        } else {
+            document.getElementById('videoTitle').textContent = 'Video Not Found';
+            document.getElementById('videoCanvas').innerHTML = `
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-red-400 text-4xl mb-4">✖</div>
+                        <div class="text-red-400 font-bold mb-4">VIDEO NOT FOUND</div>
+                        <a href="xrvideo-gallery.html" class="action-btn inline-flex">Return to Gallery</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadVideo(video) {
+            // Update page title
+            document.title = video.title + ' - Hump Heaven';
+
+            // Load video player
+            document.getElementById('videoCanvas').innerHTML = video.embedCode;
+
+            // Update title and metadata
+            document.getElementById('videoTitle').textContent = video.title;
+            document.getElementById('videoDuration').querySelector('span').textContent = video.duration;
+            document.getElementById('videoViews').querySelector('span').textContent = video.views.toLocaleString() + ' views';
+            document.getElementById('videoDate').querySelector('span').textContent = new Date(video.date).toLocaleDateString();
+            document.getElementById('videoCategory').querySelector('span').textContent = video.category.toUpperCase().replace(/-/g, ' ');
+            document.getElementById('videoDescription').textContent = video.description;
+
+            // Load tags
+            const tagsContainer = document.getElementById('videoTags');
+            tagsContainer.innerHTML = video.tags.map(tag => 
+                `<span class="tag">#${tag}</span>`
+            ).join('');
+
+            // Load related videos
+            loadRelatedVideos(video);
+
+            // Increment view count
+            incrementViews(video.id);
+        }
+
+        function loadRelatedVideos(currentVideo) {
+            const related = videos
+                .filter(v => v.id !== currentVideo.id && v.category === currentVideo.category)
+                .slice(0, 8);
+
+            const container = document.getElementById('relatedVideos');
+            container.innerHTML = related.map(v => `
+                <a href="xrvideoplayer.html?id=${v.id}" class="block group">
+                    <div class="glass-panel overflow-hidden hover:border-holo-gold border-2 border-transparent transition-all duration-300">
+                        <div class="aspect-video bg-gradient-to-br from-cyber-gray to-cyber-dark flex items-center justify-center relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-holo-blue/10 to-holo-purple/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <svg class="w-12 h-12 text-holo-blue opacity-50 group-hover:opacity-100 group-hover:scale-125 transition-all z-10" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path>
+                            </svg>
+                        </div>
+                        <div class="p-3">
+                            <h4 class="font-bold text-sm text-holo-gold line-clamp-2 mb-2 group-hover:text-holo-blue transition-colors">${v.title}</h4>
+                            <div class="flex justify-between text-xs text-gray-400">
+                                <span>${v.duration}</span>
+                                <span>${v.views.toLocaleString()} views</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        function loadFromLocalStorage() {
+            const storageKey = `video_${videoId}`;
+            const stored = localStorage.getItem(storageKey);
+            
+            if (stored) {
+                const data = JSON.parse(stored);
+                likes = data.likes || 0;
+                dislikes = data.dislikes || 0;
+                liked = data.userLiked || false;
+                disliked = data.userDisliked || false;
+                comments = data.comments || [];
+            }
+
+            // Check if video is saved
+            const savedVideos = JSON.parse(localStorage.getItem('hx_savedVideos') || '[]');
+            isSaved = savedVideos.some(v => v.id === videoId);
+
+            updateLikeButtons();
+            updateSaveButton();
+            renderComments();
+        }
+
+        function saveToLocalStorage() {
+            const storageKey = `video_${videoId}`;
+            const data = {
+                likes,
+                dislikes,
+                userLiked: liked,
+                userDisliked: disliked,
+                comments
+            };
+            localStorage.setItem(storageKey, JSON.stringify(data));
+        }
+
+        function toggleLike() {
+            if (liked) {
+                likes--;
+                liked = false;
+            } else {
+                likes++;
+                liked = true;
+                if (disliked) {
+                    dislikes--;
+                    disliked = false;
+                }
+            }
+            updateLikeButtons();
+            saveToLocalStorage();
+        }
+
+        function toggleDislike() {
+            if (disliked) {
+                dislikes--;
+                disliked = false;
+            } else {
+                dislikes++;
+                disliked = true;
+                if (liked) {
+                    likes--;
+                    liked = false;
+                }
+            }
+            updateLikeButtons();
+            saveToLocalStorage();
+        }
+
+        function updateLikeButtons() {
+            const likeBtn = document.getElementById('likeBtn');
+            const dislikeBtn = document.getElementById('dislikeBtn');
+            
+            document.getElementById('likeCount').textContent = likes;
+            document.getElementById('dislikeCount').textContent = dislikes;
+
+            if (liked) {
+                likeBtn.classList.add('active');
+            } else {
+                likeBtn.classList.remove('active');
+            }
+
+            if (disliked) {
+                dislikeBtn.classList.add('active');
+            } else {
+                dislikeBtn.classList.remove('active');
+            }
+        }
+
+        async function postComment() {
+            const input = document.getElementById('commentInput');
+            const text = input.value.trim();
+            if (!text || !videoId) return;
+
+            const comment = {
+                id: Date.now(),
+                text: text,
+                author: 'Anonymous User',
+                date: new Date().toISOString(),
+                likes: 0
+            };
+
+            // Optimistic UI update
+            comments.unshift(comment);
+            input.value = '';
+            renderComments();
+            saveToLocalStorage();
+
+            // Post to JsonBin via CommentsAPI
+            try {
+                if (window.CommentsAPI) {
+                    await window.CommentsAPI.postComment(videoId, comment);
+                }
+            } catch (e) {
+                console.warn('Failed to post comment to remote service', e);
+            }
+        }
+
+        async function renderComments() {
+            const container = document.getElementById('commentsList');
+            document.getElementById('commentCount').textContent = `(${comments.length})`;
+
+            if (comments.length === 0) {
+                container.innerHTML = '<div class="text-center text-gray-500 py-8">No comments yet. Be the first to comment!</div>';
+                return;
+            }
+            // If CommentsAPI available, fetch latest from remote
+            if (window.CommentsAPI) {
+                try {
+                    const remote = await window.CommentsAPI.getComments(videoId);
+                    if (Array.isArray(remote) && remote.length) {
+                        comments = remote;
+                    }
+                } catch (e) { console.warn('Failed to fetch remote comments', e); }
+            }
+
+            container.innerHTML = comments.map(comment => `
+                <div class="comment-item">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-holo-blue to-holo-purple flex items-center justify-center font-bold text-sm">
+                            ${comment.author.charAt(0)}
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="font-bold text-holo-blue">${comment.author}</span>
+                                <span class="text-xs text-gray-500">${formatDate(comment.date)}</span>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-2">${comment.text}</p>
+                            <button onclick="likeComment(${comment.id})" class="text-xs text-holo-blue hover:text-holo-gold transition-colors">
+                                👍 ${comment.likes}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function likeComment(commentId) {
+            const comment = comments.find(c => c.id === commentId);
+            if (comment) {
+                comment.likes++;
+                renderComments();
+                saveToLocalStorage();
+            }
+        }
+
+        function shareVideo() {
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: currentVideo.title,
+                    text: currentVideo.description,
+                    url: url
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('✅ Video link copied to clipboard!');
+                });
+            }
+        }
+
+        function toggleSave() {
+            if (!currentVideo) return;
+
+            const savedVideos = JSON.parse(localStorage.getItem('hx_savedVideos') || '[]');
+            
+            if (isSaved) {
+                // Remove from saved
+                const filtered = savedVideos.filter(v => v.id !== currentVideo.id);
+                localStorage.setItem('hx_savedVideos', JSON.stringify(filtered));
+                isSaved = false;
+                showNotification('❌ Removed from HXMP Stash');
+            } else {
+                // Check if video is free or unlocked
+                const isUnlocked = checkIfUnlocked(currentVideo.id);
+                const isFree = !currentVideo.isPremium;
+
+                if (!isFree && !isUnlocked) {
+                    alert('⚠️ You can only save free videos or permanently unlocked videos to your HXMP Stash.');
+                    return;
+                }
+
+                // Add to saved
+                savedVideos.push({
+                    id: currentVideo.id,
+                    title: currentVideo.title,
+                    duration: currentVideo.duration,
+                    views: currentVideo.views,
+                    category: currentVideo.category,
+                    savedAt: new Date().toISOString()
+                });
+                localStorage.setItem('hx_savedVideos', JSON.stringify(savedVideos));
+                isSaved = true;
+                showNotification('✅ Saved to HXMP Stash!');
+            }
+
+            updateSaveButton();
+        }
+
+        function updateSaveButton() {
+            const saveBtn = document.getElementById('saveBtn');
+            const saveBtnText = document.getElementById('saveBtnText');
+            
+            if (isSaved) {
+                saveBtn.classList.add('active');
+                saveBtnText.textContent = 'Saved';
+            } else {
+                saveBtn.classList.remove('active');
+                saveBtnText.textContent = 'Save';
+            }
+        }
+
+        function checkIfUnlocked(videoId) {
+            // Check if video is permanently unlocked
+            const masterUnlocked = localStorage.getItem('hx_master_unlocked') === 'true';
+            if (masterUnlocked) return true;
+
+            const unlockedVideos = JSON.parse(localStorage.getItem('hx_unlockedVideos') || '[]');
+            const unlock = unlockedVideos.find(v => v.id === videoId);
+            
+            if (!unlock) return false;
+            
+            // Check if it's permanent or still valid
+            if (!unlock.expiresAt) return true; // Permanent
+            return Date.now() < unlock.expiresAt; // Check if not expired
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-24 right-4 px-6 py-4 bg-gradient-to-r from-holo-blue to-holo-purple rounded-lg font-cyber font-bold text-white z-50 shadow-2xl';
+            notification.style.animation = 'pulse-glow 2s ease-in-out infinite';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function incrementViews(videoId) {
+            console.log('View counted for:', videoId);
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+
+            if (minutes < 1) return 'just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            if (days < 7) return `${days}d ago`;
+            return date.toLocaleDateString();
+        }
+
+        // Prevent page unload on fullscreen exit
+        document.addEventListener('fullscreenchange', (e) => {
+            if (!document.fullscreenElement) {
+                console.log('Fullscreen exited, staying on page');
+            }
+        });
+    </script>
+
+    <script src="floating-nav.js?v=1760664105"></script>
+    <script src="app.js?v=1760664105"></script>
+</body>
+</html>

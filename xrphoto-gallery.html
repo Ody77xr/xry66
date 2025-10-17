@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Photo Gallery - Hump Heaven</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'holo-gold': '#FFD700',
+                        'holo-blue': '#00FFFF',
+                        'holo-purple': '#FF00FF',
+                        'holo-green': '#00FF00',
+                        'cyber-dark': '#0A0A0F',
+                        'cyber-gray': '#1A1A2E'
+                    },
+                    fontFamily: {
+                        'cyber': ['Orbitron', 'monospace'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .holographic-gradient {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700, #FF00FF);
+            background-size: 400% 400%;
+            animation: holographic 4s ease-in-out infinite;
+        }
+        
+        .holographic-text {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: holographic 3s ease-in-out infinite;
+        }
+        
+        .cyber-glow {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(255, 0, 255, 0.2);
+        }
+        
+        @keyframes holographic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        
+        .glass-morphism {
+            background: rgba(26, 26, 46, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Mobile safety: prevent horizontal overflow and ensure responsive media */
+        html, body { overflow-x: hidden; }
+        img, video, iframe { max-width: 100%; height: auto; }
+    </style>
+  <link rel="stylesheet" crossorigin href="/xry66/assets/floating-nav-Bd9a4gJc.css">
+</head>
+<body class="bg-cyber-dark text-white overflow-x-hidden">
+
+    <!-- Photo Gallery Container -->
+    <div class="min-h-screen pt-8 pb-28 relative overflow-hidden">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-cyber-dark via-cyber-gray to-cyber-dark"></div>
+        <div class="absolute inset-0 holographic-gradient opacity-5 animate-pulse"></div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-1/4 left-1/6 w-16 h-16 lg:w-20 lg:h-20 holographic-gradient rounded-full blur-xl opacity-30 animate-float"></div>
+        <div class="absolute bottom-1/3 right-1/6 w-24 h-24 lg:w-32 lg:h-32 bg-holo-purple rounded-full blur-2xl opacity-20 animate-float" style="animation-delay: 1.5s;"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 lg:px-6 relative z-10">
+            <!-- Header -->
+            <div class="text-center mb-8 lg:mb-12">
+                <h1 class="text-3xl sm:text-4xl lg:text-6xl font-cyber font-black holographic-text mb-3 lg:mb-4 animate-float">
+                    PHOTO_GALLERY
+                </h1>
+                <div class="text-base sm:text-lg lg:text-lg font-mono text-holo-blue mb-4 lg:mb-6">// High-Resolution Image Collection</div>
+                
+                <!-- System Status -->
+                <div class="mockup-code glass-morphism max-w-md mx-auto mb-6 lg:mb-8 text-xs sm:text-sm">
+                    <pre data-prefix="$" class="text-holo-gold"><code>gallery --mode photo --status</code></pre>
+                    <pre data-prefix=">" class="text-success"><code>MODULE: PHOTO_GALLERY</code></pre>
+                    <pre data-prefix=">" class="text-holo-blue"><code>STATUS: OPERATIONAL</code></pre>
+                    <pre data-prefix=">" class="text-holo-purple"><code>FILTER: READY</code></pre>
+                </div>
+            </div>
+
+            <!-- Filter Categories -->
+            <div class="flex flex-wrap justify-center gap-2 lg:gap-4 mb-8 lg:mb-12">
+                <button class="btn btn-sm lg:btn-md glass-morphism cyber-glow photo-category-btn active font-cyber" data-category="all">
+                    <span class="holographic-text text-xs lg:text-sm">ALL_PHOTOS</span>
+                </button>
+                <button class="btn btn-sm lg:btn-md glass-morphism photo-category-btn font-cyber" data-category="premium">
+                    <span class="text-holo-gold text-xs lg:text-sm">PREMIUM</span>
+                </button>
+                <button class="btn btn-sm lg:btn-md glass-morphism photo-category-btn font-cyber" data-category="exclusive">
+                    <span class="text-holo-purple text-xs lg:text-sm">EXCLUSIVE</span>
+                </button>
+                <button class="btn btn-sm lg:btn-md glass-morphism photo-category-btn font-cyber" data-category="featured">
+                    <span class="text-holo-blue text-xs lg:text-sm">FEATURED</span>
+                </button>
+                <button class="btn btn-sm lg:btn-md glass-morphism photo-category-btn font-cyber" data-category="recent">
+                    <span class="text-holo-green text-xs lg:text-sm">RECENT</span>
+                </button>
+            </div>
+
+            <!-- Photo Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 lg:gap-6" id="photoGrid">
+                <!-- Photos will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Holographic Photo Viewer Modal -->
+    <div class="modal" id="photoViewer">
+        <div class="modal-box max-w-5xl glass-morphism cyber-glow">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-cyber text-xl holographic-text" id="photoViewerTitle"></h3>
+                <button class="btn btn-sm btn-circle glass-morphism cyber-glow" onclick="closePhotoViewer()">
+                    <span class="holographic-text text-lg">✕</span>
+                </button>
+            </div>
+            
+            <div class="text-center">
+                <img id="photoViewerImage" class="max-w-full max-h-[70vh] object-contain rounded-lg cyber-glow mb-4">
+                
+                <div class="bg-cyber-gray/50 p-4 rounded-lg">
+                    <p id="photoViewerDescription" class="font-mono text-gray-300 mb-4"></p>
+                    
+                    <div class="flex flex-wrap justify-center gap-4 text-sm font-mono">
+                        <div class="badge holographic-gradient text-cyber-dark font-bold" id="photoViewerId"></div>
+                        <div class="badge badge-outline border-holo-blue text-holo-blue" id="photoViewerCategory"></div>
+                        <div class="badge badge-outline border-holo-purple text-holo-purple" id="photoViewerDate"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label class="modal-backdrop" for="photoViewer" onclick="closePhotoViewer()"></label>
+    </div>
+
+    <script>
+        // Enhanced photo gallery functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Enhanced filter button interactions
+            document.querySelectorAll('.photo-category-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active from all buttons
+                    document.querySelectorAll('.photo-category-btn').forEach(b => {
+                        b.classList.remove('active', 'cyber-glow');
+                    });
+                    
+                    // Add active to clicked button
+                    this.classList.add('active', 'cyber-glow');
+                    
+                    // Filter photos by category
+                    const category = this.getAttribute('data-category');
+                    filterPhotos(category);
+                });
+            });
+        });
+        
+        function filterPhotos(category) {
+            // This will be handled by photo-gallery.js
+            if (window.photoGallery) {
+                window.photoGallery.filterByCategory(category);
+            }
+        }
+        
+        function closePhotoViewer() {
+            document.getElementById('photoViewer').classList.remove('modal-open');
+        }
+    </script>
+    
+
+    <script src="floating-nav.js?v=1760664105"></script>
+<script src="app.js?v=1760664105"></script>
+    <script src="photo-gallery.js?v=1760664105"></script>
+</body>
+</html>

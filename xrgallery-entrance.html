@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Gallery Entrance - Hump Heaven</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'holo-gold': '#FFD700',
+                        'holo-blue': '#00FFFF',
+                        'holo-purple': '#FF00FF',
+                        'cyber-dark': '#0A0A0F',
+                        'cyber-gray': '#1A1A2E'
+                    },
+                    fontFamily: {
+                        'cyber': ['Orbitron', 'monospace'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .holographic-gradient {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700, #FF00FF);
+            background-size: 400% 400%;
+            animation: holographic 4s ease-in-out infinite;
+        }
+        
+        .holographic-text {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: holographic 3s ease-in-out infinite;
+        }
+        
+        .cyber-glow {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(255, 0, 255, 0.2);
+        }
+        
+        .holographic-border {
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700) border-box;
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+        }
+        
+        @keyframes holographic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        
+        .glass-morphism {
+            background: rgba(26, 26, 46, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Mobile safety: no horizontal overflow, responsive media */
+        html, body { overflow-x: hidden; }
+        img, video, iframe { max-width: 100%; height: auto; }
+        
+        /* Mobile viewport fixes */
+        @media (max-width: 768px) {
+            .hero-section {
+                min-height: calc(100vh - 120px) !important;
+                padding-bottom: 120px !important;
+                padding-top: 2rem !important;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.5rem !important;
+                line-height: 1.2 !important;
+                word-break: break-word !important;
+            }
+            
+            .hero-section .text-lg {
+                font-size: 0.95rem !important;
+            }
+            
+            .hero-section p {
+                font-size: 0.9rem !important;
+            }
+            
+            .grid {
+                gap: 1rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-section {
+                min-height: calc(100vh - 100px) !important;
+                padding-bottom: 100px !important;
+                padding-top: 1.5rem !important;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem !important;
+                line-height: 1.1 !important;
+            }
+            
+            .hero-section .text-lg {
+                font-size: 0.85rem !important;
+            }
+            
+            .hero-section p {
+                font-size: 0.85rem !important;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .hero-section h1 {
+                font-size: 1.75rem !important;
+            }
+            
+            .hero-section .text-lg {
+                font-size: 0.8rem !important;
+            }
+        }
+    </style>
+  <link rel="stylesheet" crossorigin href="/xry66/assets/floating-nav-Bd9a4gJc.css">
+</head>
+<body class="bg-cyber-dark text-white overflow-x-hidden">
+
+    <!-- Holographic Gallery Entrance -->
+    <div class="min-h-screen flex items-center justify-center relative overflow-hidden py-8 hero-section" style="min-height: calc(100vh - 120px); padding-bottom: 120px;">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-cyber-dark via-cyber-gray to-cyber-dark"></div>
+        <div class="absolute inset-0 holographic-gradient opacity-10 animate-pulse"></div>
+        
+        <!-- Matrix-style background elements -->
+        <div class="absolute top-1/4 left-1/6 w-16 h-16 lg:w-20 lg:h-20 holographic-gradient rounded-full blur-xl opacity-40 animate-float"></div>
+        <div class="absolute bottom-1/3 right-1/6 w-24 h-24 lg:w-32 lg:h-32 bg-holo-purple rounded-full blur-2xl opacity-30 animate-float" style="animation-delay: 1.5s;"></div>
+        <div class="absolute top-1/2 left-1/2 w-12 h-12 lg:w-16 lg:h-16 bg-holo-blue rounded-full blur-lg opacity-50 animate-float" style="animation-delay: 0.8s;"></div>
+        
+        <div class="max-w-6xl mx-auto px-4 lg:px-6 z-10">
+            <div class="text-center mb-8 lg:mb-16">
+                <h1 class="text-3xl sm:text-4xl lg:text-7xl font-cyber font-black holographic-text mb-4 lg:mb-6 animate-float">
+                    GALLERY_ENTRANCE
+                </h1>
+                <div class="text-base sm:text-lg lg:text-xl font-mono text-holo-blue mb-3 lg:mb-4">// Select Media Type for Access</div>
+                <p class="text-sm sm:text-base lg:text-lg font-mono text-gray-300 max-w-2xl mx-auto">
+                    Choose your preferred <span class="holographic-text">MEDIA_FORMAT</span> to access 
+                    our premium content collection.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 max-w-6xl mx-auto">
+                <!-- Photo Gallery Option -->
+                <a href="xrphoto-gallery.html" class="group">
+                    <div class="card glass-morphism hover:cyber-glow transition-all duration-500 h-full animate-float group-hover:scale-105">
+                        <div class="card-body text-center p-4 lg:p-8">
+                            <div class="text-4xl lg:text-6xl mb-4 lg:mb-6 holographic-text group-hover:animate-pulse">📸</div>
+                            <h2 class="card-title justify-center font-cyber text-lg lg:text-2xl holographic-text mb-3 lg:mb-4">
+                                PHOTO_GALLERY
+                            </h2>
+                            <div class="font-mono text-holo-blue text-xs lg:text-sm mb-3 lg:mb-4">
+                                // High-Resolution Image Collection
+                            </div>
+                            <p class="font-mono text-gray-300 mb-4 lg:mb-6 leading-relaxed text-sm lg:text-base">
+                                Access premium photo collections featuring 
+                                <span class="text-holo-gold">curated visual content</span> in stunning detail.
+                            </p>
+                            <div class="flex flex-wrap gap-1 lg:gap-2 justify-center mb-4 lg:mb-6">
+                                <div class="badge badge-sm lg:badge-md holographic-gradient text-cyber-dark font-bold">HD_QUALITY</div>
+                                <div class="badge badge-sm lg:badge-md badge-outline border-holo-blue text-holo-blue">FILTERED</div>
+                                <div class="badge badge-sm lg:badge-md badge-outline border-holo-purple text-holo-purple">EXCLUSIVE</div>
+                            </div>
+                            <div class="btn btn-sm lg:btn-md btn-block glass-morphism holographic-border group-hover:cyber-glow font-cyber">
+                                <span class="holographic-text text-sm lg:text-base">ACCESS_PHOTOS</span>
+                                <svg class="w-4 h-4 lg:w-5 lg:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Video Gallery Option -->
+                <a href="xrvideo-gallery.html" class="group">
+                    <div class="card glass-morphism hover:cyber-glow transition-all duration-500 h-full animate-float group-hover:scale-105" style="animation-delay: 0.3s;">
+                        <div class="card-body text-center p-4 lg:p-8">
+                            <div class="text-4xl lg:text-6xl mb-4 lg:mb-6 holographic-text group-hover:animate-pulse">🎥</div>
+                            <h2 class="card-title justify-center font-cyber text-lg lg:text-2xl holographic-text mb-3 lg:mb-4">
+                                VIDEO_GALLERY
+                            </h2>
+                            <div class="font-mono text-holo-blue text-xs lg:text-sm mb-3 lg:mb-4">
+                                // Premium Video Content System
+                            </div>
+                            <p class="font-mono text-gray-300 mb-4 lg:mb-6 leading-relaxed text-sm lg:text-base">
+                                Experience our exclusive video collection with our 
+                                <span class="text-holo-gold">advanced player interface</span> and streaming technology.
+                            </p>
+                            <div class="flex flex-wrap gap-1 lg:gap-2 justify-center mb-4 lg:mb-6">
+                                <div class="badge badge-sm lg:badge-md holographic-gradient text-cyber-dark font-bold">4K_READY</div>
+                                <div class="badge badge-sm lg:badge-md badge-outline border-holo-blue text-holo-blue">STREAMING</div>
+                                <div class="badge badge-sm lg:badge-md badge-outline border-holo-purple text-holo-purple">PREMIUM</div>
+                            </div>
+                            <div class="btn btn-sm lg:btn-md btn-block glass-morphism holographic-border group-hover:cyber-glow font-cyber">
+                                <span class="holographic-text text-sm lg:text-base">ACCESS_VIDEOS</span>
+                                <svg class="w-4 h-4 lg:w-5 lg:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m2 5H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Categories Mode Option -->
+                <a href="xrcategory-gallery.html" class="group">
+                    <div class="card glass-morphism hover:cyber-glow transition-all duration-500 h-full animate-float group-hover:scale-105" style="animation-delay: 0.6s;">
+                        <div class="card-body text-center p-4 lg:p-8">
+                            <div class="text-4xl lg:text-6xl mb-4 lg:mb-6 holographic-text group-hover:animate-pulse">🏷️</div>
+                            <h2 class="card-title justify-center font-cyber text-lg lg:text-2xl holographic-text mb-3 lg:mb-4">
+                                CATEGORIES_MODE
+                            </h2>
+                            <div class="font-mono text-holo-blue text-xs lg:text-sm mb-3 lg:mb-4">
+                                // Select category → subcategory → filter by tags
+                            </div>
+                            <p class="font-mono text-gray-300 mb-4 lg:mb-6 leading-relaxed text-sm lg:text-base">
+                                Dive into dedicated category lists, search by <span class="text-holo-gold">tags</span>, or explore curated
+                                subcategories like <span class="text-holo-purple">Women (Premium)</span>, <span class="text-holo-blue">Ass Clappin'</span>,
+                                <span class="text-holo-blue">Wedgied Up Cake</span>, and more.
+                            </p>
+                            <div class="flex flex-wrap gap-1 lg:gap-2 justify-center mb-4 lg:mb-6">
+                                <div class="badge badge-sm lg:badge-md badge-outline border-holo-blue text-holo-blue">TAG_FILTERS</div>
+                                <div class="badge badge-sm lg:badge-md badge-outline border-holo-purple text-holo-purple">SUBCATEGORIES</div>
+                                <div class="badge badge-sm lg:badge-md holographic-gradient text-cyber-dark font-bold">DYNAMIC</div>
+                            </div>
+                            <div class="btn btn-sm lg:btn-md btn-block glass-morphism holographic-border group-hover:cyber-glow font-cyber">
+                                <span class="holographic-text text-sm lg:text-base">ENTER_CATEGORIES</span>
+                                <svg class="w-4 h-4 lg:w-5 lg:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- System Status -->
+            <div class="mt-8 lg:mt-12 text-center">
+                <div class="mockup-code glass-morphism max-w-md mx-auto text-xs sm:text-sm">
+                    <pre data-prefix="$" class="text-holo-gold"><code>system_status --gallery</code></pre>
+                    <pre data-prefix=">" class="text-success"><code>PHOTO_MODULE: ONLINE</code></pre>
+                    <pre data-prefix=">" class="text-success"><code>VIDEO_MODULE: ONLINE</code></pre>
+                    <pre data-prefix=">" class="text-holo-blue"><code>ACCESS_LEVEL: AUTHORIZED</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Interactive glow effects
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 0 30px rgba(0, 255, 255, 0.5), 0 0 60px rgba(255, 0, 255, 0.3)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(255, 0, 255, 0.2)';
+            });
+        });
+    </script>
+    
+    <script src="floating-nav.js?v=1760664105"></script>
+<script src="app.js?v=1760664105"></script>
+</body>
+</html>

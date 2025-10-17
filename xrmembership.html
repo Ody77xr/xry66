@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>HXMPA' Portal - Hump Heaven</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'holo-gold': '#FFD700',
+                        'holo-blue': '#00FFFF',
+                        'holo-purple': '#FF00FF',
+                        'cyber-dark': '#0A0A0F',
+                        'cyber-gray': '#1A1A2E'
+                    },
+                    fontFamily: {
+                        'cyber': ['Orbitron', 'monospace'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .holographic-text {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: holographic 3s ease-in-out infinite;
+        }
+        
+        @keyframes holographic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        
+        .glass-morphism {
+            background: rgba(26, 26, 46, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+        
+        .cyber-glow {
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3), 0 0 60px rgba(255, 0, 255, 0.2);
+        }
+        
+        .progress-ring {
+            stroke: #00FFFF;
+            stroke-width: 8;
+            fill: none;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        
+        html, body { overflow-x: hidden; background: #0A0A0F; }
+        
+        .feature-check {
+            color: #00FF00;
+            font-size: 1.5rem;
+        }
+        
+        .feature-cross {
+            color: #FF0000;
+            font-size: 1.5rem;
+        }
+    </style>
+  <link rel="stylesheet" crossorigin href="/xry66/assets/floating-nav-Bd9a4gJc.css">
+</head>
+<body class="bg-cyber-dark text-white overflow-x-hidden pb-32">
+
+    <!-- Auth View (Not Logged In) -->
+    <div id="authView" class="hidden">
+        
+        <!-- Hero Section -->
+        <div class="relative min-h-screen flex items-center justify-center overflow-hidden" style="min-height: 80vh; padding-bottom: 120px;">
+            <div class="absolute inset-0 bg-gradient-to-br from-cyber-dark via-cyber-gray to-cyber-dark"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-holo-blue/10 via-holo-purple/10 to-holo-gold/10 animate-pulse"></div>
+            
+            <div class="container mx-auto px-4 py-16 relative z-10">
+                <div class="text-center mb-12 animate-float">
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-cyber font-black holographic-text mb-6 drop-shadow-2xl">
+                        HXMPA' PORTAL
+                    </h1>
+                    <div class="text-xl md:text-2xl font-mono text-holo-blue mb-4">// Join the Ultimate Hump Heaven Community</div>
+                    <p class="text-lg text-gray-300 max-w-2xl mx-auto font-mono">
+                        Choose your membership tier and unlock exclusive content, features, and creator benefits
+                    </p>
+                </div>
+
+                <!-- Quick Auth Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                    <button onclick="showLoginForm()" class="px-8 py-4 bg-gradient-to-r from-holo-blue to-holo-purple rounded-full font-cyber font-bold text-lg hover:scale-105 transition-transform">
+                        SIGN IN
+                    </button>
+                    <button onclick="showSignupForm()" class="px-8 py-4 border-2 border-holo-gold text-holo-gold rounded-full font-cyber font-bold text-lg hover:bg-holo-gold hover:text-cyber-dark transition-all">
+                        CREATE ACCOUNT
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Membership Plans Comparison -->
+        <div class="container mx-auto px-4 max-w-7xl -mt-32 relative z-20 mb-16">
+            <h2 class="text-4xl md:text-5xl font-cyber holographic-text text-center mb-12">MEMBERSHIP TIERS</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- FREE Plan -->
+                <div class="glass-morphism rounded-3xl p-8 border-2 border-holo-blue hover:border-holo-gold transition-all">
+                    <div class="text-center mb-6">
+                        <div class="text-5xl mb-4">🆓</div>
+                        <h3 class="text-3xl font-cyber text-holo-blue mb-2">FREE TIER</h3>
+                        <div class="text-4xl font-bold text-holo-gold mb-2">$0</div>
+                        <div class="text-sm text-gray-400 font-mono">Forever Free</div>
+                    </div>
+
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg">
+                            <span class="feature-check">✓</span>
+                            <div class="flex-1">
+                                <div class="font-bold text-holo-blue">1 Hour Daily Browsing</div>
+                                <div class="text-xs text-gray-400">Resets every 24 hours</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg">
+                            <span class="feature-check">✓</span>
+                            <div class="flex-1">
+                                <div class="font-bold text-holo-blue">1 Video Unlock/Month</div>
+                                <div class="text-xs text-gray-400">3-day access per unlock</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg">
+                            <span class="feature-check">✓</span>
+                            <div class="flex-1">
+                                <div class="font-bold text-holo-blue">Ad-Based Extensions</div>
+                                <div class="text-xs text-gray-400">Watch 1 ad = +30min (3x/day max)</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg">
+                            <span class="feature-cross">✗</span>
+                            <div class="flex-1 opacity-50">
+                                <div class="font-bold">No Messaging</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg">
+                            <span class="feature-cross">✗</span>
+                            <div class="flex-1 opacity-50">
+                                <div class="font-bold">No HXMPA' Uploads</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg">
+                            <span class="feature-cross">✗</span>
+                            <div class="flex-1 opacity-50">
+                                <div class="font-bold">No Creator Earnings</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="signupFree()" class="w-full py-4 border-2 border-holo-blue text-holo-blue rounded-full font-cyber font-bold hover:bg-holo-blue hover:text-cyber-dark transition-all">
+                        START FREE
+                    </button>
+                </div>
+
+                <!-- VIP Plan -->
+                <div class="glass-morphism rounded-3xl p-8 border-4 border-holo-gold cyber-glow relative">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 bg-gradient-to-r from-holo-gold to-holo-purple rounded-full font-cyber font-bold text-sm text-cyber-dark">
+                        ⭐ RECOMMENDED ⭐
+                    </div>
+                    
+                    <div class="text-center mb-6 mt-4">
+                        <div class="text-5xl mb-4">👑</div>
+                        <h3 class="text-3xl font-cyber holographic-text mb-2">HXMPA' VIP</h3>
+                        <div class="text-5xl font-bold text-holo-gold mb-2">$12.99</div>
+                        <div class="text-sm text-gray-400 font-mono">per month</div>
+                    </div>
+
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg border-l-2 border-holo-gold">
+                            <span class="feature-check">✓</span>
+                            <div class="flex-1">
+                                <div class="font-bold text-holo-gold">Unlimited Browsing</div>
+                                <div class="text-xs text-gray-400">No time limits, ever</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg border-l-2 border-holo-gold">
+                            <span class="feature-check">✓</span>
+                            <div class="flex-1">
+                                <div class="font-bold text-holo-gold">Unlock All Content</div>
+                                <div class="text-xs text-gray-400">Every image & video instantly</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg border-l-2 border-holo-gold">
+                            <span class="feature-check">✓</span>
+                            <div class="flex-1">
+                                <div class="font-bold text-holo-gold">Messaging Enabled</div>
+                                <div class="text-xs text-gray-400">Chat with HXMPA' community</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg border-l-2 border-holo-gold">
+                            <span class="feature-check">✓</span>
+                            <div class="flex-1">
+                                <div class="font-bold text-holo-gold">Creator Uploads</div>
+                                <div class="text-xs text-gray-400">Submit your own HXMP content</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg border-l-2 border-holo-gold">
+                            <span class="feature-check">✓</span>
+                            <div class="flex-1">
+                                <div class="font-bold text-holo-gold">Get Paid</div>
+                                <div class="text-xs text-gray-400">Earn from custom content</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg border-l-2 border-holo-gold">
+                            <span class="feature-check">✓</span>
+                            <div class="flex-1">
+                                <div class="font-bold text-holo-gold">Request HXMPA' Session</div>
+                                <div class="text-xs text-gray-400">Book personal sessions</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg border-l-2 border-holo-gold">
+                            <span class="feature-check">✓</span>
+                            <div class="flex-1">
+                                <div class="font-bold text-holo-gold">Premium Support</div>
+                                <div class="text-xs text-gray-400">Priority assistance</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 bg-cyber-dark bg-opacity-50 p-3 rounded-lg border-l-2 border-holo-gold">
+                            <span class="feature-check">✓</span>
+                            <div class="flex-1">
+                                <div class="font-bold text-holo-gold">More to Come</div>
+                                <div class="text-xs text-gray-400">New features added regularly</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="signupVIP()" class="w-full py-4 bg-gradient-to-r from-holo-gold via-holo-purple to-holo-blue rounded-full font-cyber font-bold text-lg text-cyber-dark hover:scale-105 transition-transform">
+                        BECOME HXMPA' VIP
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard View (Logged In) -->
+    <div id="dashboardView" class="hidden">
+        
+        <!-- Dashboard Hero -->
+        <div class="relative bg-gradient-to-br from-cyber-dark via-cyber-gray to-cyber-dark" style="padding: 6rem 0 3rem; margin-bottom: -4rem;">
+            <div class="absolute inset-0 bg-gradient-to-br from-holo-blue/10 via-holo-purple/10 to-holo-gold/10 animate-pulse"></div>
+            
+            <div class="container mx-auto px-4 max-w-7xl relative z-10">
+                <div class="flex items-center justify-between flex-wrap gap-4">
+                    <div>
+                        <div class="text-sm font-mono text-gray-400 mb-2">Welcome back,</div>
+                        <h1 class="text-4xl md:text-5xl font-cyber holographic-text" id="dashboardUsername">HXMPA' Member</h1>
+                        <div class="flex items-center gap-3 mt-3">
+                            <span id="membershipBadge" class="px-4 py-1 bg-gradient-to-r from-holo-gold to-holo-purple rounded-full text-xs font-bold text-cyber-dark">
+                                VIP MEMBER
+                            </span>
+                            <span class="text-xs text-gray-400 font-mono">Member since: <span id="memberSince">Jan 2024</span></span>
+                        </div>
+                    </div>
+                    <button onclick="logout()" class="px-6 py-3 border-2 border-red-500 text-red-500 rounded-lg font-cyber hover:bg-red-500 hover:text-white transition-all">
+                        SIGN OUT
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="container mx-auto px-4 max-w-7xl relative z-20">
+            
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                
+                <!-- Browsing Time -->
+                <div class="glass-morphism rounded-2xl p-6 cyber-glow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-3xl">⏱️</div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-holo-blue" id="browsingTime">∞</div>
+                            <div class="text-xs text-gray-400 font-mono">Browsing Time</div>
+                        </div>
+                    </div>
+                    <div class="h-2 bg-cyber-gray rounded-full overflow-hidden">
+                        <div id="browsingBar" class="h-full bg-gradient-to-r from-holo-blue to-holo-purple" style="width: 100%"></div>
+                    </div>
+                    <div class="text-xs text-gray-400 font-mono mt-2" id="browsingStatus">Unlimited</div>
+                </div>
+
+                <!-- Video Unlocks -->
+                <div class="glass-morphism rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-3xl">🔓</div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-holo-purple" id="unlocksCount">∞</div>
+                            <div class="text-xs text-gray-400 font-mono">Video Unlocks</div>
+                        </div>
+                    </div>
+                    <div class="h-2 bg-cyber-gray rounded-full overflow-hidden">
+                        <div id="unlocksBar" class="h-full bg-gradient-to-r from-holo-purple to-holo-gold" style="width: 100%"></div>
+                    </div>
+                    <div class="text-xs text-gray-400 font-mono mt-2" id="unlocksStatus">All Content Unlocked</div>
+                </div>
+
+                <!-- Ad Credits -->
+                <div class="glass-morphism rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-3xl">🎬</div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-holo-gold" id="adCredits">3/3</div>
+                            <div class="text-xs text-gray-400 font-mono">Ad Credits</div>
+                        </div>
+                    </div>
+                    <div class="h-2 bg-cyber-gray rounded-full overflow-hidden">
+                        <div id="adBar" class="h-full bg-gradient-to-r from-holo-gold to-holo-blue" style="width: 100%"></div>
+                    </div>
+                    <div class="text-xs text-gray-400 font-mono mt-2" id="adStatus">3 ads available today</div>
+                </div>
+
+                <!-- Upload Slots -->
+                <div class="glass-morphism rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-3xl">📤</div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-holo-blue" id="uploadSlots">∞</div>
+                            <div class="text-xs text-gray-400 font-mono">Upload Slots</div>
+                        </div>
+                    </div>
+                    <div class="h-2 bg-cyber-gray rounded-full overflow-hidden">
+                        <div id="uploadBar" class="h-full bg-gradient-to-r from-holo-blue to-holo-purple" style="width: 100%"></div>
+                    </div>
+                    <div class="text-xs text-gray-400 font-mono mt-2" id="uploadStatus">Creator Enabled</div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Panels -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                
+                <!-- Profile Panel -->
+                <div class="lg:col-span-1">
+                    <div class="glass-morphism rounded-2xl p-6 mb-6">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="text-3xl">👤</div>
+                            <h3 class="text-xl font-cyber text-holo-gold">HXMPA' PROFILE</h3>
+                        </div>
+                        
+                        <div class="text-center mb-6">
+                            <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-holo-blue to-holo-purple flex items-center justify-center text-4xl font-bold mb-3">
+                                <span id="userAvatar">H</span>
+                            </div>
+                            <div class="font-bold text-lg text-holo-blue" id="profileUsername">@hxmpa_user</div>
+                            <div class="text-sm text-gray-400 font-mono" id="profileEmail">user@example.com</div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Member ID:</span>
+                                <span class="text-holo-blue font-mono" id="memberId">#HXMP001</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Tier:</span>
+                                <span class="text-holo-gold font-bold" id="memberTier">VIP</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Total Uploads:</span>
+                                <span class="text-holo-purple font-bold" id="totalUploads">0</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Earnings:</span>
+                                <span class="text-holo-gold font-bold" id="totalEarnings">$0.00</span>
+                            </div>
+                        </div>
+
+                        <button onclick="editProfile()" class="w-full mt-6 py-3 border border-holo-blue text-holo-blue rounded-lg font-cyber hover:bg-holo-blue hover:text-cyber-dark transition-all">
+                            Edit Profile
+                        </button>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="glass-morphism rounded-2xl p-6">
+                        <h3 class="text-lg font-cyber text-holo-purple mb-4">QUICK ACTIONS</h3>
+                        <div class="space-y-2">
+                            <a href="xrmessaging.html" class="block w-full py-3 bg-cyber-dark bg-opacity-50 text-center rounded-lg border border-holo-blue text-holo-blue hover:bg-holo-blue hover:text-cyber-dark transition-all" id="messagingLink">
+                                💬 Messaging
+                            </a>
+                            <a href="xruploader.html" class="block w-full py-3 bg-cyber-dark bg-opacity-50 text-center rounded-lg border border-holo-purple text-holo-purple hover:bg-holo-purple hover:text-cyber-dark transition-all" id="uploaderLink">
+                                📤 Upload Content
+                            </a>
+                            <a href="xrportalgallery.html" class="block w-full py-3 bg-cyber-dark bg-opacity-50 text-center rounded-lg border border-holo-gold text-holo-gold hover:bg-holo-gold hover:text-cyber-dark transition-all" id="portalGalleryLink">
+                                🔒 My Uploads
+                            </a>
+                            <button onclick="requestSession()" class="w-full py-3 bg-cyber-dark bg-opacity-50 text-center rounded-lg border border-holo-purple text-holo-purple hover:bg-holo-purple hover:text-cyber-dark transition-all" id="sessionBtn">
+                                ✨ Request Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="lg:col-span-2">
+                    
+                    <!-- Activity Feed -->
+                    <div class="glass-morphism rounded-2xl p-6 mb-6">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="text-3xl">📊</div>
+                            <h3 class="text-2xl font-cyber holographic-text">ACTIVITY DASHBOARD</h3>
+                        </div>
+
+                        <!-- Usage Statistics -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                            <div class="bg-cyber-dark bg-opacity-50 rounded-xl p-4 border-l-4 border-holo-blue">
+                                <div class="text-sm text-gray-400 mb-1">Today's Browsing</div>
+                                <div class="text-2xl font-bold text-holo-blue" id="todayBrowsing">Unlimited</div>
+                            </div>
+                            <div class="bg-cyber-dark bg-opacity-50 rounded-xl p-4 border-l-4 border-holo-purple">
+                                <div class="text-sm text-gray-400 mb-1">Videos Watched</div>
+                                <div class="text-2xl font-bold text-holo-purple" id="videosWatched">0</div>
+                            </div>
+                            <div class="bg-cyber-dark bg-opacity-50 rounded-xl p-4 border-l-4 border-holo-gold">
+                                <div class="text-sm text-gray-400 mb-1">Messages Sent</div>
+                                <div class="text-2xl font-bold text-holo-gold" id="messagesSent">0</div>
+                            </div>
+                            <div class="bg-cyber-dark bg-opacity-50 rounded-xl p-4 border-l-4 border-holo-blue">
+                                <div class="text-sm text-gray-400 mb-1">Content Uploaded</div>
+                                <div class="text-2xl font-bold text-holo-blue" id="contentUploaded">0</div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div>
+                            <h4 class="text-lg font-cyber text-holo-gold mb-4">RECENT ACTIVITY</h4>
+                            <div id="recentActivity" class="space-y-2">
+                                <div class="flex items-center gap-3 bg-cyber-dark bg-opacity-30 p-3 rounded-lg">
+                                    <div class="text-holo-blue">🎬</div>
+                                    <div class="flex-1 text-sm">
+                                        <div class="text-gray-300">Watched "Giant BBW TittyFuck"</div>
+                                        <div class="text-xs text-gray-500">2 hours ago</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 bg-cyber-dark bg-opacity-30 p-3 rounded-lg">
+                                    <div class="text-holo-purple">👑</div>
+                                    <div class="flex-1 text-sm">
+                                        <div class="text-gray-300">Upgraded to HXMPA' VIP</div>
+                                        <div class="text-xs text-gray-500">1 day ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Creator Dashboard (VIP Only) -->
+                    <div id="creatorPanel" class="glass-morphism rounded-2xl p-6 mb-6">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="text-3xl">💰</div>
+                            <h3 class="text-2xl font-cyber text-holo-gold">CREATOR DASHBOARD</h3>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-4 bg-cyber-dark bg-opacity-50 rounded-xl border border-holo-gold">
+                                <div class="text-3xl font-bold text-holo-gold" id="creatorEarnings">$0.00</div>
+                                <div class="text-xs text-gray-400 mt-1">Total Earnings</div>
+                            </div>
+                            <div class="text-center p-4 bg-cyber-dark bg-opacity-50 rounded-xl border border-holo-purple">
+                                <div class="text-3xl font-bold text-holo-purple" id="creatorViews">0</div>
+                                <div class="text-xs text-gray-400 mt-1">Total Views</div>
+                            </div>
+                            <div class="text-center p-4 bg-cyber-dark bg-opacity-50 rounded-xl border border-holo-blue">
+                                <div class="text-3xl font-bold text-holo-blue" id="creatorContent">0</div>
+                                <div class="text-xs text-gray-400 mt-1">Content Pieces</div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="window.location.href='xruploader.html'" class="py-4 bg-gradient-to-r from-holo-purple to-holo-blue rounded-lg font-cyber font-bold hover:scale-105 transition-transform">
+                                📤 Upload New Content
+                            </button>
+                            <button onclick="window.location.href='xrportalgallery.html'" class="py-4 border-2 border-holo-gold text-holo-gold rounded-lg font-cyber font-bold hover:bg-holo-gold hover:text-cyber-dark transition-all">
+                                🔒 View My Gallery
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Premium Features -->
+                    <div class="glass-morphism rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="text-3xl">⭐</div>
+                            <h3 class="text-2xl font-cyber holographic-text">PREMIUM FEATURES</h3>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="window.location.href='xrmessaging.html'" class="py-4 bg-cyber-dark bg-opacity-50 rounded-lg border border-holo-blue text-holo-blue hover:bg-holo-blue hover:text-cyber-dark transition-all font-cyber" id="messageFeature">
+                                💬 Messaging
+                            </button>
+                            <button onclick="requestSession()" class="py-4 bg-cyber-dark bg-opacity-50 rounded-lg border border-holo-purple text-holo-purple hover:bg-holo-purple hover:text-cyber-dark transition-all font-cyber" id="sessionFeature">
+                                🎥 Request Session
+                            </button>
+                            <button onclick="window.location.href='xrgallery-entrance.html'" class="py-4 bg-cyber-dark bg-opacity-50 rounded-lg border border-holo-gold text-holo-gold hover:bg-holo-gold hover:text-cyber-dark transition-all font-cyber">
+                                🖼️ Browse Gallery
+                            </button>
+                            <button onclick="showSupport()" class="py-4 bg-cyber-dark bg-opacity-50 rounded-lg border border-holo-blue text-holo-blue hover:bg-holo-blue hover:text-cyber-dark transition-all font-cyber" id="supportFeature">
+                                🆘 Premium Support
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upgrade Banner (for Free users) -->
+            <div id="upgradeBanner" class="hidden glass-morphism rounded-2xl p-8 text-center border-2 border-holo-gold cyber-glow mb-8">
+                <div class="text-5xl mb-4">🚀</div>
+                <h3 class="text-3xl font-cyber holographic-text mb-4">UPGRADE TO HXMPA' VIP</h3>
+                <p class="text-gray-300 font-mono mb-6 max-w-2xl mx-auto">
+                    Unlock unlimited browsing, all content, messaging, creator uploads, and start earning from your content!
+                </p>
+                <button onclick="upgradeToVIP()" class="px-12 py-4 bg-gradient-to-r from-holo-gold via-holo-purple to-holo-blue rounded-full font-cyber font-bold text-lg text-cyber-dark hover:scale-105 transition-transform">
+                    UPGRADE NOW - $12.99/mo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-box glass-morphism border-2 border-holo-blue">
+            <h3 class="font-cyber text-2xl holographic-text mb-6">SIGN IN TO HUMP HEAVEN</h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="text-sm text-gray-400 font-mono mb-2 block">Email / Username</label>
+                    <input type="text" id="loginEmail" placeholder="your@email.com" class="input w-full bg-cyber-gray border-holo-blue text-white" />
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 font-mono mb-2 block">Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" class="input w-full bg-cyber-gray border-holo-blue text-white" />
+                </div>
+            </div>
+
+            <div class="modal-action">
+                <button onclick="closeLoginModal()" class="btn btn-ghost">Cancel</button>
+                <button onclick="performLogin()" class="btn bg-gradient-to-r from-holo-blue to-holo-purple border-none text-white">
+                    Sign In
+                </button>
+            </div>
+        </div>
+        <label class="modal-backdrop" onclick="closeLoginModal()"></label>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-box glass-morphism border-2 border-holo-gold max-w-2xl">
+            <h3 class="font-cyber text-2xl holographic-text mb-6">CREATE YOUR HXMPA' ACCOUNT</h3>
+            
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-sm text-gray-400 font-mono mb-2 block">Username</label>
+                        <input type="text" id="signupUsername" placeholder="hxmpa_legend" class="input w-full bg-cyber-gray border-holo-gold text-white" />
+                    </div>
+                    <div>
+                        <label class="text-sm text-gray-400 font-mono mb-2 block">Email</label>
+                        <input type="email" id="signupEmail" placeholder="your@email.com" class="input w-full bg-cyber-gray border-holo-gold text-white" />
+                    </div>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 font-mono mb-2 block">Password</label>
+                    <input type="password" id="signupPassword" placeholder="••••••••" class="input w-full bg-cyber-gray border-holo-gold text-white" />
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 font-mono mb-2 block">Select Membership</label>
+                    <select id="signupTier" class="select w-full bg-cyber-gray border-holo-gold text-white">
+                        <option value="free">Free Tier ($0/mo)</option>
+                        <option value="vip" selected>HXMPA' VIP ($12.99/mo)</option>
+                    </select>
+                </div>
+                <div class="text-xs text-gray-400 font-mono">
+                    By creating an account, you agree to our terms of service and privacy policy.
+                </div>
+            </div>
+
+            <div class="modal-action">
+                <button onclick="closeSignupModal()" class="btn btn-ghost">Cancel</button>
+                <button onclick="performSignup()" class="btn bg-gradient-to-r from-holo-gold to-holo-purple border-none text-cyber-dark font-bold">
+                    Create Account
+                </button>
+            </div>
+        </div>
+        <label class="modal-backdrop" onclick="closeSignupModal()"></label>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const isLoggedIn = localStorage.getItem('hx_isLoggedIn') === 'true';
+        const userTier = localStorage.getItem('hx_memberTier') || 'free';
+
+        // Show appropriate view
+        if (isLoggedIn) {
+            showDashboard();
+        } else {
+            showAuth();
+        }
+
+        function showAuth() {
+            document.getElementById('authView').classList.remove('hidden');
+            document.getElementById('dashboardView').classList.add('hidden');
+        }
+
+        function showDashboard() {
+            document.getElementById('authView').classList.add('hidden');
+            document.getElementById('dashboardView').classList.remove('hidden');
+            loadDashboardData();
+        }
+
+        function loadDashboardData() {
+            const tier = localStorage.getItem('hx_memberTier') || 'free';
+            const username = localStorage.getItem('hx_username') || 'HXMPA_User';
+            const email = localStorage.getItem('hx_email') || 'user@example.com';
+            const memberId = localStorage.getItem('hx_memberId') || '#HXMP' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+
+            // Update profile info
+            document.getElementById('dashboardUsername').textContent = username;
+            document.getElementById('profileUsername').textContent = '@' + username;
+            document.getElementById('profileEmail').textContent = email;
+            document.getElementById('memberId').textContent = memberId;
+            document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
+
+            // Update tier-specific data
+            if (tier === 'vip') {
+                loadVIPData();
+            } else {
+                loadFreeData();
+            }
+        }
+
+        function loadVIPData() {
+            document.getElementById('membershipBadge').textContent = '👑 HXMPA\' VIP';
+            document.getElementById('membershipBadge').className = 'px-4 py-1 bg-gradient-to-r from-holo-gold to-holo-purple rounded-full text-xs font-bold text-cyber-dark';
+            document.getElementById('memberTier').textContent = 'VIP';
+            
+            // Unlimited stats
+            document.getElementById('browsingTime').textContent = '∞';
+            document.getElementById('browsingStatus').textContent = 'Unlimited Access';
+            document.getElementById('unlocksCount').textContent = '∞';
+            document.getElementById('unlocksStatus').textContent = 'All Content Unlocked';
+            document.getElementById('uploadSlots').textContent = '∞';
+            document.getElementById('uploadStatus').textContent = 'Creator Enabled';
+            document.getElementById('todayBrowsing').textContent = 'Unlimited';
+
+            // Show creator panel
+            document.getElementById('creatorPanel').classList.remove('hidden');
+            document.getElementById('upgradeBanner').classList.add('hidden');
+
+            // Enable all features
+            document.querySelectorAll('#messagingLink, #uploaderLink, #portalGalleryLink, #sessionBtn, #messageFeature, #sessionFeature, #supportFeature').forEach(el => {
+                el.classList.remove('opacity-50', 'cursor-not-allowed');
+            });
+        }
+
+        function loadFreeData() {
+            document.getElementById('membershipBadge').textContent = '🆓 FREE MEMBER';
+            document.getElementById('membershipBadge').className = 'px-4 py-1 bg-holo-blue bg-opacity-20 border border-holo-blue rounded-full text-xs font-bold text-holo-blue';
+            document.getElementById('memberTier').textContent = 'Free';
+
+            // Get today's usage
+            const browsingMinutes = parseInt(localStorage.getItem('hx_browsingMinutes_' + getTodayKey()) || '60');
+            const unlocksUsed = parseInt(localStorage.getItem('hx_monthlyUnlocks_' + getMonthKey()) || '0');
+            const adsWatched = parseInt(localStorage.getItem('hx_adsWatched_' + getTodayKey()) || '0');
+
+            // Update stats
+            document.getElementById('browsingTime').textContent = browsingMinutes + 'min';
+            document.getElementById('browsingStatus').textContent = 'Daily limit: 60min';
+            document.getElementById('browsingBar').style.width = (browsingMinutes / 60 * 100) + '%';
+
+            document.getElementById('unlocksCount').textContent = (1 - unlocksUsed) + '/1';
+            document.getElementById('unlocksStatus').textContent = 'Monthly unlock available';
+            document.getElementById('unlocksBar').style.width = ((1 - unlocksUsed) / 1 * 100) + '%';
+
+            document.getElementById('adCredits').textContent = (3 - adsWatched) + '/3';
+            document.getElementById('adStatus').textContent = (3 - adsWatched) + ' ads available today';
+            document.getElementById('adBar').style.width = ((3 - adsWatched) / 3 * 100) + '%';
+
+            document.getElementById('uploadSlots').textContent = '0';
+            document.getElementById('uploadStatus').textContent = 'VIP Required';
+            document.getElementById('uploadBar').style.width = '0%';
+
+            document.getElementById('todayBrowsing').textContent = browsingMinutes + 'min remaining';
+
+            // Hide creator panel
+            document.getElementById('creatorPanel').classList.add('hidden');
+            document.getElementById('upgradeBanner').classList.remove('hidden');
+
+            // Disable VIP features
+            document.querySelectorAll('#messagingLink, #uploaderLink, #portalGalleryLink, #sessionBtn, #messageFeature, #sessionFeature, #supportFeature').forEach(el => {
+                el.classList.add('opacity-50', 'cursor-not-allowed');
+                el.onclick = (e) => {
+                    e.preventDefault();
+                    alert('⚠️ This feature requires HXMPA\' VIP membership. Upgrade now!');
+                };
+            });
+        }
+
+        // Modal Functions
+        function showLoginForm() {
+            document.getElementById('loginModal').classList.add('modal-open');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('modal-open');
+        }
+
+        function showSignupForm() {
+            document.getElementById('signupModal').classList.add('modal-open');
+        }
+
+        function closeSignupModal() {
+            document.getElementById('signupModal').classList.remove('modal-open');
+        }
+
+        function performLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            // Demo login (replace with real auth)
+            localStorage.setItem('hx_isLoggedIn', 'true');
+            localStorage.setItem('hx_username', email.split('@')[0]);
+            localStorage.setItem('hx_email', email);
+            localStorage.setItem('hx_memberTier', 'vip'); // Demo: auto VIP
+            localStorage.setItem('hx_memberId', '#HXMP' + Math.floor(Math.random() * 10000).toString().padStart(4, '0'));
+            localStorage.setItem('hx_memberSince', new Date().toISOString());
+
+            closeLoginModal();
+            location.reload();
+        }
+
+        function performSignup() {
+            const username = document.getElementById('signupUsername').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const tier = document.getElementById('signupTier').value;
+
+            if (!username || !email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            // Demo signup (replace with real auth)
+            localStorage.setItem('hx_isLoggedIn', 'true');
+            localStorage.setItem('hx_username', username);
+            localStorage.setItem('hx_email', email);
+            localStorage.setItem('hx_memberTier', tier);
+            localStorage.setItem('hx_memberId', '#HXMP' + Math.floor(Math.random() * 10000).toString().padStart(4, '0'));
+            localStorage.setItem('hx_memberSince', new Date().toISOString());
+
+            closeSignupModal();
+            location.reload();
+        }
+
+        function signupFree() {
+            document.getElementById('signupTier').value = 'free';
+            showSignupForm();
+        }
+
+        function signupVIP() {
+            document.getElementById('signupTier').value = 'vip';
+            showSignupForm();
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to sign out?')) {
+                localStorage.removeItem('hx_isLoggedIn');
+                location.reload();
+            }
+        }
+
+        function upgradeToVIP() {
+            if (confirm('Upgrade to HXMPA\' VIP for $12.99/month?')) {
+                localStorage.setItem('hx_memberTier', 'vip');
+                alert('✅ Congratulations! You are now a HXMPA\' VIP member!');
+                location.reload();
+            }
+        }
+
+        function requestSession() {
+            alert('🎥 Session request feature coming soon! HXMPA\' VIP members will be able to book personal sessions with SirHumpAlot94.');
+        }
+
+        function editProfile() {
+            alert('Profile editing feature coming soon!');
+        }
+
+        function showSupport() {
+            alert('Premium Support: Email support@humpheaven.com or use the messaging system for priority assistance.');
+        }
+
+        function addToPlaylist() {
+            alert('Playlist feature coming soon!');
+        }
+
+        // Helper functions
+        function getTodayKey() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function getMonthKey() {
+            const date = new Date();
+            return date.getFullYear() + '-' + (date.getMonth() + 1);
+        }
+    </script>
+
+    <script src="floating-nav.js?v=1760664105"></script>
+    <script src="app.js?v=1760664105"></script>
+</body>
+</html>

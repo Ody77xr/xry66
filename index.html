@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Hxmp Space - Loading...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0A0A0F;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            font-family: 'Orbitron', monospace;
+        }
+
+        /* Animated background gradient */
+        .background-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #0A0A0F 100%);
+            z-index: 1;
+        }
+
+        /* Holographic overlay */
+        .holographic-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, 
+                rgba(255, 0, 255, 0.1) 0%, 
+                rgba(0, 255, 255, 0.1) 25%,
+                rgba(255, 215, 0, 0.1) 50%,
+                rgba(0, 255, 255, 0.1) 75%,
+                rgba(255, 0, 255, 0.1) 100%
+            );
+            background-size: 400% 400%;
+            animation: holographicShift 8s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(0, 255, 255, 0.6);
+            border-radius: 50%;
+            z-index: 3;
+            animation: float 8s infinite;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .particle:nth-child(2n) { 
+            background: rgba(255, 0, 255, 0.6); 
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
+            animation-duration: 10s;
+        }
+        
+        .particle:nth-child(3n) { 
+            background: rgba(255, 215, 0, 0.6); 
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            animation-duration: 12s;
+        }
+
+        /* Logo container */
+        .logo-container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            animation: fadeInScale 2s ease-out;
+        }
+
+        /* Glowing border effect */
+        .glow-border {
+            position: relative;
+            padding: 20px;
+            border-radius: 30px;
+            background: rgba(26, 26, 46, 0.4);
+            backdrop-filter: blur(20px);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .glow-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 30px;
+            padding: 2px;
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700, #FF00FF);
+            background-size: 400% 400%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderGlow 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        /* Logo image */
+        .logo {
+            max-width: 280px;
+            width: 90vw;
+            height: auto;
+            border-radius: 20px;
+            filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.6)) 
+                    drop-shadow(0 0 60px rgba(255, 0, 255, 0.4))
+                    brightness(1.1) contrast(1.15);
+            animation: logoFloat 4s ease-in-out infinite, logoPulse 2s ease-in-out infinite;
+        }
+
+        /* Loading text */
+        .loading-text {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: clamp(18px, 5vw, 28px);
+            font-weight: 900;
+            margin-top: 30px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: holographicText 3s ease-in-out infinite, fadeIn 1.5s ease-out 0.5s forwards;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        /* Scanning line effect */
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(0, 255, 255, 0.8) 50%, 
+                transparent 100%
+            );
+            top: 0;
+            animation: scan 3s linear infinite;
+            z-index: 5;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        /* Progress bar */
+        .progress-container {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 30px auto 0;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FF00FF, #00FFFF, #FFD700);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            width: 0%;
+            animation: progressFill 3s ease-in-out forwards, progressShimmer 2s linear infinite;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+        }
+
+        /* Fade out animation */
+        .fade-out {
+            animation: fadeOutScale 0.8s ease-in-out forwards !important;
+        }
+
+        /* Keyframes */
+        @keyframes holographicShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { 
+                background-position: 0% 50%; 
+                filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.4));
+            }
+            50% { 
+                background-position: 100% 50%; 
+                filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.6));
+            }
+        }
+
+        @keyframes holographicText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(50px);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(-2deg); }
+            50% { transform: translateY(0px) rotate(0deg); }
+            75% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { 
+                filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.6)) 
+                        drop-shadow(0 0 60px rgba(255, 0, 255, 0.4))
+                        brightness(1.1) contrast(1.15);
+            }
+            50% { 
+                filter: drop-shadow(0 0 50px rgba(0, 255, 255, 0.9)) 
+                        drop-shadow(0 0 80px rgba(255, 0, 255, 0.6))
+                        brightness(1.3) contrast(1.2);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translate(100vw, -100vh);
+                opacity: 0;
+            }
+        }
+
+        @keyframes progressFill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes progressShimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        @keyframes fadeOutScale {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.2);
+                filter: blur(20px);
+            }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .glow-border {
+                padding: 15px;
+            }
+            
+            .logo {
+                max-width: 250px;
+            }
+            
+            .loading-text {
+                font-size: 20px;
+                letter-spacing: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background layers -->
+    <div class="background-gradient"></div>
+    <div class="holographic-overlay"></div>
+    <div class="scan-line"></div>
+
+    <!-- Floating particles -->
+    <div class="particles-container" id="particlesContainer"></div>
+
+    <!-- Main content -->
+    <div class="logo-container" id="logoContainer">
+        <div class="glow-border">
+            <img src="assets/xr2.png" alt="Hxmp Space Logo" class="logo" id="logo">
+        </div>
+        <div class="loading-text">INITIALIZING HXMP SPACE</div>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        // Generate floating particles
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            const particleCount = window.innerWidth > 768 ? 30 : 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // Redirect to xrhome.html after 3.5 seconds
+        setTimeout(() => {
+            const logoContainer = document.getElementById('logoContainer');
+            const body = document.body;
+            
+            logoContainer.classList.add('fade-out');
+            body.style.transition = 'opacity 0.8s ease-out';
+            body.style.opacity = '0';
+            
+            setTimeout(() => {
+                window.location.href = 'xrhome.html';
+            }, 800);
+        }, 3500);
+
+        // Prevent long loading times
+        setTimeout(() => {
+            window.location.href = 'xrhome.html';
+        }, 10000);
+    </script>
+</body>
+</html>

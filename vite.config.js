@@ -3,6 +3,8 @@ import { copyFileSync, existsSync, mkdirSync } from 'fs'
 import { resolve } from 'path'
 
 export default defineConfig({
+  // base path for GitHub Pages (repo: Ody77xr/xry66)
+  base: '/xry66/',
   root: '.',
   build: {
     outDir: 'dist',

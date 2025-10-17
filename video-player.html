@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>Video Player - Hxmp Space</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth-utils.js"></script>
+    <link rel="stylesheet" href="floating-nav.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #0A0A0F 100%);
+            font-family: 'Orbitron', monospace;
+            min-height: 100vh;
+        }
+        
+        .holographic-text {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: holographic 3s ease-in-out infinite;
+        }
+        
+        @keyframes holographic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .glass-card {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .video-container {
+            position: relative;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        .time-limit-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: rgba(255, 0, 0, 0.3);
+            z-index: 1000;
+        }
+        
+        .time-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00FF00, #FFFF00, #FF0000);
+            transition: width 0.3s ease;
+        }
+        
+        .unlock-button {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF);
+            transition: all 0.3s ease;
+        }
+        
+        .unlock-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="pb-24">
+    <!-- Time Limit Bar (for free users) -->
+    <div id="timeLimitBar" class="time-limit-bar hidden">
+        <div id="timeProgress" class="time-progress" style="width: 100%"></div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Video Player Section -->
+        <div class="glass-card rounded-2xl p-6 mb-8">
+            <div id="videoContainer" class="video-container aspect-video mb-6">
+                <video 
+                    id="mainVideo" 
+                    class="w-full h-full"
+                    controls
+                    preload="metadata"
+                    style="display: none;"
+                >
+                    Your browser does not support the video tag.
+                </video>
+                
+                <!-- Video Overlay for Locked Content -->
+                <div id="videoOverlay" class="video-overlay">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">🔒</div>
+                        <h3 class="text-2xl font-bold holographic-text mb-4">Content Locked</h3>
+                        <p id="lockMessage" class="text-gray-300 mb-6">This content requires purchase or VIP membership</p>
+                        <div id="unlockOptions" class="space-y-4">
+                            <!-- Unlock options will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Time Limit Warning -->
+                <div id="timeLimitWarning" class="video-overlay hidden">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">⏰</div>
+                        <h3 class="text-2xl font-bold text-red-400 mb-4">Time Limit Reached</h3>
+                        <p class="text-gray-300 mb-6">You've reached your daily 1-hour limit</p>
+                        <div class="space-y-4">
+                            <button id="watchAdButton" class="unlock-button px-6 py-3 rounded-lg text-white font-bold">
+                                Watch Ad for +30 Minutes
+                            </button>
+                            <div class="text-sm text-gray-400">
+                                <span id="adUnlocksRemaining">3</span> ad unlocks remaining today
+                            </div>
+                            <a href="xrmembership.html" class="block text-cyan-400 hover:text-cyan-300">
+                                Upgrade to VIP for unlimited access
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Info -->
+            <div id="videoInfo" class="space-y-4">
+                <h1 id="videoTitle" class="text-3xl font-bold holographic-text">Loading...</h1>
+                <div class="flex flex-wrap items-center gap-4 text-sm text-gray-400">
+                    <span id="videoDuration">Duration: --:--</span>
+                    <span id="videoViews">Views: --</span>
+                    <span id="videoCategory">Category: --</span>
+                    <span id="videoDate">Uploaded: --</span>
+                </div>
+                <p id="videoDescription" class="text-gray-300 leading-relaxed">Loading description...</p>
+                
+                <!-- Tags -->
+                <div id="videoTags" class="flex flex-wrap gap-2">
+                    <!-- Tags will be populated by JavaScript -->
+                </div>
+                
+                <!-- Actions -->
+                <div class="flex items-center gap-4 pt-4 border-t border-gray-700">
+                    <button id="likeButton" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors">
+                        <span id="likeIcon">👍</span>
+                        <span id="likeCount">0</span>
+                    </button>
+                    <button id="saveButton" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors">
+                        <span id="saveIcon">💾</span>
+                        <span>Save</span>
+                    </button>
+                    <button id="shareButton" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors">
+                        <span>🔗</span>
+                        <span>Share</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="glass-card rounded-2xl p-6">
+            <h3 class="text-xl font-bold mb-6">Comments</h3>
+            
+            <!-- Add Comment (for authenticated users) -->
+            <div id="addCommentSection" class="mb-6 hidden">
+                <textarea 
+                    id="commentText" 
+                    placeholder="Add a comment..."
+                    class="w-full p-4 bg-gray-800 border border-gray-600 rounded-lg text-white resize-none"
+                    rows="3"
+                ></textarea>
+                <div class="flex justify-end mt-2">
+                    <button id="postCommentButton" class="unlock-button px-6 py-2 rounded-lg text-white font-bold">
+                        Post Comment
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Comments List -->
+            <div id="commentsList" class="space-y-4">
+                <div class="text-center text-gray-400 py-8">
+                    Loading comments...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="floating-nav.js"></script>
+    <script>
+        class VideoPlayer {
+            constructor() {
+                this.contentId = null;
+                this.content = null;
+                this.watchSession = null;
+                this.watchTimer = null;
+                this.remainingTime = 0;
+                this.isPlaying = false;
+                this.canWatch = false;
+                this.init();
+            }
+
+            async init() {
+                // Get content ID from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                this.contentId = urlParams.get('id');
+                
+                if (!this.contentId) {
+                    this.showError('No video specified');
+                    return;
+                }
+
+                // Check authentication
+                const isAuth = await authManager.isAuthenticated();
+                if (isAuth) {
+                    document.getElementById('addCommentSection').classList.remove('hidden');
+                }
+
+                // Load content
+                await this.loadContent();
+                await this.checkAccess();
+                await this.loadComments();
+                
+                this.bindEvents();
+            }
+
+            async loadContent() {
+                try {
+                    const { data, error } = await authManager.supabaseClient
+                        .from('content')
+                        .select(`
+                            *,
+                            categories(name),
+                            users(username, display_name)
+                        `)
+                        .eq('id', this.contentId)
+                        .eq('status', 'published')
+                        .single();
+
+                    if (error) throw error;
+                    
+                    this.content = data;
+                    this.displayContent();
+                    
+                } catch (error) {
+                    console.error('Error loading content:', error);
+                    this.showError('Video not found');
+                }
+            }
+
+            displayContent() {
+                const content = this.content;
+                
+                document.getElementById('videoTitle').textContent = content.title;
+                document.getElementById('videoDescription').textContent = content.description || 'No description available';
+                document.getElementById('videoDuration').textContent = `Duration: ${this.formatDuration(content.duration)}`;
+                document.getElementById('videoViews').textContent = `Views: ${content.view_count || 0}`;
+                document.getElementById('videoCategory').textContent = `Category: ${content.categories?.name || 'Uncategorized'}`;
+                document.getElementById('videoDate').textContent = `Uploaded: ${new Date(content.created_at).toLocaleDateString()}`;
+                document.getElementById('likeCount').textContent = content.like_count || 0;
+
+                // Display tags
+                const tagsContainer = document.getElementById('videoTags');
+                tagsContainer.innerHTML = '';
+                if (content.tags && content.tags.length > 0) {
+                    content.tags.forEach(tag => {
+                        const tagElement = document.createElement('span');
+                        tagElement.className = 'px-3 py-1 bg-gray-700 rounded-full text-sm text-cyan-400';
+                        tagElement.textContent = `#${tag}`;
+                        tagsContainer.appendChild(tagElement);
+                    });
+                }
+
+                // Update page title
+                document.title = `${content.title} - Hxmp Space`;
+            }
+
+            async checkAccess() {
+                this.canWatch = await authManager.canWatchContent(this.contentId);
+                
+                if (this.canWatch) {
+                    await this.setupVideoPlayer();
+                } else {
+                    await this.showUnlockOptions();
+                }
+            }
+
+            async setupVideoPlayer() {
+                const video = document.getElementById('mainVideo');
+                const overlay = document.getElementById('videoOverlay');
+                
+                // Hide overlay and show video
+                overlay.style.display = 'none';
+                video.style.display = 'block';
+                
+                // Set video source
+                video.src = this.content.file_url;
+                
+                // Start watch session
+                await this.startWatchSession();
+                
+                // Set up time tracking for free users
+                const isVip = await authManager.isVIP();
+                if (!isVip) {
+                    await this.setupTimeTracking();
+                }
+                
+                // Bind video events
+                video.addEventListener('play', () => {
+                    this.isPlaying = true;
+                    this.startWatchTimer();
+                });
+                
+                video.addEventListener('pause', () => {
+                    this.isPlaying = false;
+                    this.stopWatchTimer();
+                });
+                
+                video.addEventListener('ended', () => {
+                    this.isPlaying = false;
+                    this.stopWatchTimer();
+                });
+            }
+
+            async showUnlockOptions() {
+                const content = this.content;
+                const unlockOptions = document.getElementById('unlockOptions');
+                const lockMessage = document.getElementById('lockMessage');
+                
+                let message = 'This content requires purchase or VIP membership';
+                let options = '';
+                
+                if (content.is_super_hxmp) {
+                    message = 'This is Super Hxmp content - available for individual purchase only';
+                    options = `
+                        <button onclick="purchaseContent('${content.id}')" class="unlock-button px-6 py-3 rounded-lg text-white font-bold">
+                            Purchase for $${content.price}
+                        </button>
+                    `;
+                } else if (content.is_premium) {
+                    message = 'This premium content is available with VIP membership or individual purchase';
+                    options = `
+                        <div class="space-y-3">
+                            <a href="xrmembership.html" class="block unlock-button px-6 py-3 rounded-lg text-white font-bold text-center">
+                                Get VIP Membership - $12.99/month
+                            </a>
+                            <button onclick="purchaseContent('${content.id}')" class="block w-full px-6 py-3 rounded-lg bg-gray-700 hover:bg-gray-600 text-white font-bold">
+                                Or Purchase This Video - $${content.price}
+                            </button>
+                        </div>
+                    `;
+                } else if (content.password) {
+                    message = 'This content is password protected';
+                    options = `
+                        <div class="space-y-3">
+                            <input type="password" id="videoPassword" placeholder="Enter password" class="px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white">
+                            <button onclick="unlockWithPassword()" class="unlock-button px-6 py-3 rounded-lg text-white font-bold">
+                                Unlock
+                            </button>
+                        </div>
+                    `;
+                }
+                
+                lockMessage.textContent = message;
+                unlockOptions.innerHTML = options;
+            }
+
+            async setupTimeTracking() {
+                const profile = await authManager.getUserProfile();
+                if (!profile) return;
+                
+                this.remainingTime = await authManager.getRemainingWatchTime();
+                
+                if (this.remainingTime <= 0) {
+                    this.showTimeLimitWarning();
+                    return;
+                }
+                
+                // Show time limit bar
+                const timeLimitBar = document.getElementById('timeLimitBar');
+                timeLimitBar.classList.remove('hidden');
+                
+                this.updateTimeProgress();
+            }
+
+            updateTimeProgress() {
+                const maxTime = 3600; // 1 hour
+                const percentage = (this.remainingTime / maxTime) * 100;
+                document.getElementById('timeProgress').style.width = `${percentage}%`;
+            }
+
+            showTimeLimitWarning() {
+                const video = document.getElementById('mainVideo');
+                const overlay = document.getElementById('videoOverlay');
+                const warning = document.getElementById('timeLimitWarning');
+                
+                video.style.display = 'none';
+                overlay.style.display = 'none';
+                warning.classList.remove('hidden');
+                
+                // Update ad unlocks remaining
+                authManager.getUserProfile().then(profile => {
+                    const remaining = 3 - (profile.ad_unlocks_used_today || 0);
+                    document.getElementById('adUnlocksRemaining').textContent = remaining;
+                    
+                    if (remaining <= 0) {
+                        document.getElementById('watchAdButton').disabled = true;
+                        document.getElementById('watchAdButton').textContent = 'No Ad Unlocks Remaining';
+                    }
+                });
+            }
+
+            async startWatchSession() {
+                try {
+                    const user = await authManager.getCurrentUser();
+                    if (!user) return;
+                    
+                    const { data, error } = await authManager.supabaseClient
+                        .from('watch_sessions')
+                        .insert({
+                            user_id: user.id,
+                            content_id: this.contentId,
+                            session_start: new Date().toISOString()
+                        })
+                        .select()
+                        .single();
+                    
+                    if (!error) {
+                        this.watchSession = data;
+                    }
+                } catch (error) {
+                    console.error('Error starting watch session:', error);
+                }
+            }
+
+            startWatchTimer() {
+                if (this.watchTimer) return;
+                
+                this.watchTimer = setInterval(async () => {
+                    // Update watch time every 10 seconds
+                    await this.updateWatchTime(10);
+                    
+                    // Check time limits for free users
+                    const isVip = await authManager.isVIP();
+                    if (!isVip) {
+                        this.remainingTime -= 10;
+                        this.updateTimeProgress();
+                        
+                        if (this.remainingTime <= 0) {
+                            this.stopVideo();
+                            this.showTimeLimitWarning();
+                        }
+                    }
+                }, 10000);
+            }
+
+            stopWatchTimer() {
+                if (this.watchTimer) {
+                    clearInterval(this.watchTimer);
+                    this.watchTimer = null;
+                }
+            }
+
+            async updateWatchTime(seconds) {
+                try {
+                    if (this.watchSession) {
+                        await authManager.supabaseClient
+                            .from('watch_sessions')
+                            .update({
+                                duration_seconds: (this.watchSession.duration_seconds || 0) + seconds,
+                                session_end: new Date().toISOString()
+                            })
+                            .eq('id', this.watchSession.id);
+                    }
+                    
+                    // Update user's daily watch time
+                    await authManager.updateWatchTime(seconds);
+                    
+                } catch (error) {
+                    console.error('Error updating watch time:', error);
+                }
+            }
+
+            stopVideo() {
+                const video = document.getElementById('mainVideo');
+                video.pause();
+                this.stopWatchTimer();
+            }
+
+            async loadComments() {
+                try {
+                    const { data, error } = await authManager.supabaseClient
+                        .from('comments')
+                        .select(`
+                            *,
+                            users(username, display_name, avatar_url)
+                        `)
+                        .eq('content_id', this.contentId)
+                        .eq('is_deleted', false)
+                        .order('created_at', { ascending: false });
+                    
+                    if (error) throw error;
+                    
+                    this.displayComments(data || []);
+                    
+                } catch (error) {
+                    console.error('Error loading comments:', error);
+                    document.getElementById('commentsList').innerHTML = 
+                        '<div class="text-center text-gray-400 py-8">Failed to load comments</div>';
+                }
+            }
+
+            displayComments(comments) {
+                const container = document.getElementById('commentsList');
+                
+                if (comments.length === 0) {
+                    container.innerHTML = '<div class="text-center text-gray-400 py-8">No comments yet</div>';
+                    return;
+                }
+                
+                container.innerHTML = comments.map(comment => `
+                    <div class="flex gap-4 p-4 bg-gray-800 rounded-lg">
+                        <div class="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center text-sm">
+                            ${comment.users?.display_name?.charAt(0) || '?'}
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="font-bold text-cyan-400">${comment.users?.display_name || 'Anonymous'}</span>
+                                <span class="text-xs text-gray-500">${new Date(comment.created_at).toLocaleDateString()}</span>
+                            </div>
+                            <p class="text-gray-300">${comment.comment_text}</p>
+                            <div class="flex items-center gap-4 mt-2 text-sm text-gray-400">
+                                <button class="hover:text-cyan-400">👍 ${comment.like_count || 0}</button>
+                                <button class="hover:text-cyan-400">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            bindEvents() {
+                // Post comment
+                document.getElementById('postCommentButton')?.addEventListener('click', async () => {
+                    await this.postComment();
+                });
+                
+                // Like button
+                document.getElementById('likeButton').addEventListener('click', async () => {
+                    await this.toggleLike();
+                });
+                
+                // Save button
+                document.getElementById('saveButton').addEventListener('click', async () => {
+                    await this.toggleSave();
+                });
+                
+                // Watch ad button
+                document.getElementById('watchAdButton')?.addEventListener('click', async () => {
+                    await this.watchAd();
+                });
+            }
+
+            async postComment() {
+                const user = await authManager.getCurrentUser();
+                if (!user) return;
+                
+                const commentText = document.getElementById('commentText').value.trim();
+                if (!commentText) return;
+                
+                try {
+                    const { error } = await authManager.supabaseClient
+                        .from('comments')
+                        .insert({
+                            content_id: this.contentId,
+                            user_id: user.id,
+                            comment_text: commentText
+                        });
+                    
+                    if (error) throw error;
+                    
+                    document.getElementById('commentText').value = '';
+                    await this.loadComments();
+                    
+                } catch (error) {
+                    console.error('Error posting comment:', error);
+                    alert('Failed to post comment');
+                }
+            }
+
+            async toggleLike() {
+                const user = await authManager.getCurrentUser();
+                if (!user) {
+                    window.location.href = 'auth-login.html';
+                    return;
+                }
+                
+                try {
+                    // Check if already liked
+                    const { data: existingLike } = await authManager.supabaseClient
+                        .from('content_likes')
+                        .select('id')
+                        .eq('content_id', this.contentId)
+                        .eq('user_id', user.id)
+                        .single();
+                    
+                    if (existingLike) {
+                        // Unlike
+                        await authManager.supabaseClient
+                            .from('content_likes')
+                            .delete()
+                            .eq('id', existingLike.id);
+                        
+                        document.getElementById('likeIcon').textContent = '👍';
+                    } else {
+                        // Like
+                        await authManager.supabaseClient
+                            .from('content_likes')
+                            .insert({
+                                content_id: this.contentId,
+                                user_id: user.id
+                            });
+                        
+                        document.getElementById('likeIcon').textContent = '❤️';
+                    }
+                    
+                    // Reload content to get updated like count
+                    await this.loadContent();
+                    
+                } catch (error) {
+                    console.error('Error toggling like:', error);
+                }
+            }
+
+            async watchAd() {
+                // Simulate ad watching (in real implementation, integrate with ad provider)
+                const adDuration = 30; // 30 second ad
+                
+                const button = document.getElementById('watchAdButton');
+                button.disabled = true;
+                button.textContent = 'Watching Ad...';
+                
+                // Simulate ad playback
+                let countdown = adDuration;
+                const interval = setInterval(() => {
+                    button.textContent = `Watching Ad... ${countdown}s`;
+                    countdown--;
+                    
+                    if (countdown < 0) {
+                        clearInterval(interval);
+                        this.completeAdWatch();
+                    }
+                }, 1000);
+            }
+
+            async completeAdWatch() {
+                try {
+                    const user = await authManager.getCurrentUser();
+                    if (!user) return;
+                    
+                    // Record ad view
+                    await authManager.supabaseClient
+                        .from('ad_views')
+                        .insert({
+                            user_id: user.id,
+                            watched_completely: true,
+                            time_unlocked_minutes: 30
+                        });
+                    
+                    // Update user's ad unlock count
+                    const profile = await authManager.getUserProfile();
+                    await authManager.supabaseClient
+                        .from('users')
+                        .update({
+                            ad_unlocks_used_today: (profile.ad_unlocks_used_today || 0) + 1
+                        })
+                        .eq('id', user.id);
+                    
+                    // Grant 30 minutes of watch time
+                    this.remainingTime += 1800; // 30 minutes in seconds
+                    
+                    // Hide warning and resume video
+                    document.getElementById('timeLimitWarning').classList.add('hidden');
+                    await this.setupVideoPlayer();
+                    
+                } catch (error) {
+                    console.error('Error completing ad watch:', error);
+                }
+            }
+
+            formatDuration(seconds) {
+                if (!seconds) return '--:--';
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const secs = seconds % 60;
+                
+                if (hours > 0) {
+                    return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                }
+                return `${minutes}:${secs.toString().padStart(2, '0')}`;
+            }
+
+            showError(message) {
+                document.getElementById('videoContainer').innerHTML = `
+                    <div class="video-overlay">
+                        <div class="text-center">
+                            <div class="text-6xl mb-4">❌</div>
+                            <h3 class="text-2xl font-bold text-red-400 mb-4">Error</h3>
+                            <p class="text-gray-300">${message}</p>
+                            <a href="xrhome.html" class="inline-block mt-4 px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-white">
+                                Back to Home
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Global functions for unlock options
+        async function purchaseContent(contentId) {
+            // Redirect to Gumroad or payment page
+            window.location.href = `purchase.html?content=${contentId}`;
+        }
+
+        async function unlockWithPassword() {
+            const password = document.getElementById('videoPassword').value;
+            if (!password) return;
+            
+            try {
+                const user = await authManager.getCurrentUser();
+                if (!user) {
+                    window.location.href = 'auth-login.html';
+                    return;
+                }
+                
+                // Verify password (this would be done securely on the backend)
+                const { data: content } = await authManager.supabaseClient
+                    .from('content')
+                    .select('password')
+                    .eq('id', videoPlayer.contentId)
+                    .single();
+                
+                if (content && content.password === password) {
+                    // Create unlock record
+                    await authManager.supabaseClient
+                        .from('video_unlocks')
+                        .insert({
+                            user_id: user.id,
+                            content_id: videoPlayer.contentId,
+                            unlock_type: 'password',
+                            unlock_method: 'password'
+                        });
+                    
+                    // Reload page to show video
+                    window.location.reload();
+                } else {
+                    alert('Incorrect password');
+                }
+                
+            } catch (error) {
+                console.error('Error unlocking with password:', error);
+                alert('Failed to unlock content');
+            }
+        }
+
+        // Initialize video player
+        const videoPlayer = new VideoPlayer();
+    </script>
+</body>
+</html>

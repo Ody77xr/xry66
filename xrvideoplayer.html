@@ -420,6 +420,13 @@
     </div>
 
     <script src="video-gallery.js?v=1760664105"></script>
+    <script src="comments.js?v=1"></script>
+    <script>
+        // Initialize CommentsAPI with provided JsonBin API key (uses CommentsAPI fallback to localStorage if remote fails)
+        if (window.CommentsAPI) {
+            window.CommentsAPI.init({ apiKey: '$2a$10$gynJ8PtALvMlYQJHLJUGBe1rQvoz9MI1XzrcolgTRmA4axwoQlo4a' });
+        }
+    </script>
     <script>
         // Get video ID from URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -596,11 +603,10 @@
             }
         }
 
-        function postComment() {
+        async function postComment() {
             const input = document.getElementById('commentInput');
             const text = input.value.trim();
-            
-            if (!text) return;
+            if (!text || !videoId) return;
 
             const comment = {
                 id: Date.now(),
@@ -610,19 +616,38 @@
                 likes: 0
             };
 
+            // Optimistic UI update
             comments.unshift(comment);
             input.value = '';
             renderComments();
             saveToLocalStorage();
+
+            // Post to JsonBin via CommentsAPI
+            try {
+                if (window.CommentsAPI) {
+                    await window.CommentsAPI.postComment(videoId, comment);
+                }
+            } catch (e) {
+                console.warn('Failed to post comment to remote service', e);
+            }
         }
 
-        function renderComments() {
+        async function renderComments() {
             const container = document.getElementById('commentsList');
             document.getElementById('commentCount').textContent = `(${comments.length})`;
 
             if (comments.length === 0) {
                 container.innerHTML = '<div class="text-center text-gray-500 py-8">No comments yet. Be the first to comment!</div>';
                 return;
+            }
+            // If CommentsAPI available, fetch latest from remote
+            if (window.CommentsAPI) {
+                try {
+                    const remote = await window.CommentsAPI.getComments(videoId);
+                    if (Array.isArray(remote) && remote.length) {
+                        comments = remote;
+                    }
+                } catch (e) { console.warn('Failed to fetch remote comments', e); }
             }
 
             container.innerHTML = comments.map(comment => `

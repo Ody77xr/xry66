@@ -35,7 +35,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('assets/hxmp_branding.jpg') center/cover no-repeat;
+    background: url('/hxmp_branding.jpg') center/cover no-repeat;
     opacity: 0.03;
     z-index: -1;
     animation: subtleFloat 20s ease-in-out infinite alternate;
@@ -182,7 +182,7 @@ body::after {
     left: 50%;
     width: 200%;
     height: 200%;
-    background: url('assets/hxmp_branding.jpg') center/cover no-repeat;
+    background: url('/hxmp_branding.jpg') center/cover no-repeat;
     opacity: 0.08;
     transform: translate(-50%, -50%) rotate(-10deg);
     animation: heroBackgroundFloat 25s ease-in-out infinite alternate;
@@ -204,18 +204,20 @@ body::after {
 .hero-content {
     z-index: 3;
     max-width: 900px;
-    padding: 3rem;
-    background: rgba(15, 20, 25, 0.2);
+    width: min(94%, 900px);
+    padding: 2rem;
+    background: rgba(15, 20, 25, 0.18);
     backdrop-filter: blur(10px);
-    border-radius: 25px;
-    border: 2px solid rgba(201, 169, 110, 0.3);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(244, 208, 63, 0.2);
+    border-radius: 20px;
+    border: 2px solid rgba(201, 169, 110, 0.22);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(244, 208, 63, 0.15);
+    overflow: visible;
 }
 
 .hero h1 {
-    font-size: 4.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 4rem;
+    margin-bottom: 1rem;
     color: #f4d03f;
     font-family: 'Orbitron', monospace;
     font-weight: 900;
@@ -226,7 +228,8 @@ body::after {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    line-height: 1.0;
 }
 
 .hero p {

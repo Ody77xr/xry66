@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>My Profile - Hxmp Space</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="floating-nav.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth-utils.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #0A0A0F 100%);
+            font-family: 'Orbitron', monospace;
+            min-height: 100vh;
+        }
+        
+        .holographic-text {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: holographic 3s ease-in-out infinite;
+        }
+        
+        @keyframes holographic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .glass-card {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 pb-32">
+    <div class="max-w-4xl mx-auto mt-8">
+        <h1 class="text-4xl font-bold holographic-text mb-8 text-center">MY PROFILE</h1>
+
+        <div class="glass-card rounded-2xl p-8 mb-6">
+            <div class="flex items-center gap-6 mb-8">
+                <div class="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 flex items-center justify-center text-4xl">
+                    <span id="avatarInitial">?</span>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-white" id="displayName">Loading...</h2>
+                    <p class="text-gray-400" id="username">@username</p>
+                    <div class="flex gap-2 mt-2">
+                        <span class="badge badge-sm" id="roleBadge">User</span>
+                        <span class="badge badge-sm" id="tierBadge">Free</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                    <p class="text-white" id="email">loading@example.com</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Member Since</label>
+                    <p class="text-white" id="memberSince">Loading...</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Subscription</label>
+                    <p class="text-white" id="subscription">Loading...</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Status</label>
+                    <p class="text-white" id="status">Loading...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Watch Time Stats (Free Tier Only) -->
+        <div id="watchTimeCard" class="glass-card rounded-2xl p-8 mb-6 hidden">
+            <h3 class="text-xl font-bold text-cyan-400 mb-4">Today's Watch Time</h3>
+            <div class="space-y-4">
+                <div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="text-gray-400">Used</span>
+                        <span class="text-white" id="watchTimeUsed">0 min</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2">
+                        <div id="watchTimeBar" class="bg-gradient-to-r from-cyan-500 to-purple-500 h-2 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Remaining</span>
+                    <span class="text-cyan-400" id="watchTimeRemaining">60 min</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Ad Unlocks Used</span>
+                    <span class="text-white" id="adUnlocksUsed">0 / 3</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="glass-card rounded-2xl p-8">
+            <h3 class="text-xl font-bold text-white mb-4">Account Actions</h3>
+            <div class="space-y-3">
+                <a href="xrmembership.html" class="btn btn-block bg-gradient-to-r from-cyan-500 to-purple-500 border-none">
+                    Upgrade to VIP
+                </a>
+                <button onclick="signOut()" class="btn btn-block btn-outline border-red-500 text-red-500 hover:bg-red-500 hover:text-white">
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Require authentication
+        requireAuth().then(async (isAuth) => {
+            if (!isAuth) return;
+
+            // Load user profile
+            const profile = await getUserProfile();
+            if (!profile) {
+                window.location.href = 'auth-login.html';
+                return;
+            }
+
+            // Update UI
+            document.getElementById('displayName').textContent = profile.display_name || profile.username;
+            document.getElementById('username').textContent = '@' + profile.username;
+            document.getElementById('email').textContent = profile.email;
+            document.getElementById('avatarInitial').textContent = profile.username.charAt(0).toUpperCase();
+
+            // Role badge
+            const roleBadge = document.getElementById('roleBadge');
+            roleBadge.textContent = profile.role.toUpperCase();
+            roleBadge.className = 'badge badge-sm ' + (profile.role === 'admin' ? 'badge-error' : profile.role === 'creator' ? 'badge-warning' : 'badge-info');
+
+            // Tier badge
+            const tierBadge = document.getElementById('tierBadge');
+            tierBadge.textContent = profile.subscription_tier.toUpperCase();
+            tierBadge.className = 'badge badge-sm ' + (profile.subscription_tier === 'lifetime' ? 'badge-success' : profile.subscription_tier === 'vip' ? 'badge-primary' : 'badge-ghost');
+
+            // Member since
+            const memberSince = new Date(profile.created_at);
+            document.getElementById('memberSince').textContent = memberSince.toLocaleDateString();
+
+            // Subscription
+            let subText = profile.subscription_tier === 'free' ? 'Free Tier' : 
+                         profile.subscription_tier === 'lifetime' ? 'Lifetime VIP' :
+                         'VIP Member';
+            if (profile.subscription_expires_at && profile.subscription_tier === 'vip') {
+                const expiresAt = new Date(profile.subscription_expires_at);
+                subText += ` (Expires: ${expiresAt.toLocaleDateString()})`;
+            }
+            document.getElementById('subscription').textContent = subText;
+
+            // Status
+            document.getElementById('status').textContent = profile.is_active ? 'Active' : 'Inactive';
+
+            // Watch time stats (free tier only)
+            if (profile.subscription_tier === 'free') {
+                document.getElementById('watchTimeCard').classList.remove('hidden');
+                
+                const maxTime = 3600; // 1 hour in seconds
+                const used = profile.watch_time_used_today || 0;
+                const remaining = Math.max(0, maxTime - used);
+                const percentage = (used / maxTime) * 100;
+
+                document.getElementById('watchTimeUsed').textContent = Math.floor(used / 60) + ' min';
+                document.getElementById('watchTimeRemaining').textContent = Math.floor(remaining / 60) + ' min';
+                document.getElementById('watchTimeBar').style.width = percentage + '%';
+                document.getElementById('adUnlocksUsed').textContent = (profile.ad_unlocks_used_today || 0) + ' / 3';
+            }
+        });
+    </script>
+
+    <script src="floating-nav.js"></script>
+</body>
+</html>

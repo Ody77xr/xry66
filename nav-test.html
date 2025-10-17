@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>Navigation Test - Hxmp Space</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="floating-nav.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #0A0A0F 100%);
+            min-height: 100vh;
+            font-family: 'Orbitron', monospace;
+        }
+        
+        .test-content {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: white;
+            padding-bottom: 120px;
+        }
+        
+        .holographic-text {
+            background: linear-gradient(45deg, #FF00FF, #00FFFF, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: holographic 3s ease-in-out infinite;
+        }
+        
+        @keyframes holographic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .glass-card {
+            background: rgba(26, 26, 46, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-content">
+        <h1 class="text-4xl font-bold holographic-text mb-8 text-center">
+            NAVIGATION TEST PAGE
+        </h1>
+        
+        <div class="glass-card">
+            <h2 class="text-2xl font-bold text-cyan-400 mb-4">✨ Navigation Features</h2>
+            <ul class="space-y-3 text-gray-300">
+                <li>🎯 <strong>Centered Modal:</strong> Menu appears in the center of the screen</li>
+                <li>🌟 <strong>Professional Design:</strong> Holographic borders and smooth animations</li>
+                <li>📱 <strong>Mobile Responsive:</strong> Adapts perfectly to all screen sizes</li>
+                <li>♿ <strong>Accessible:</strong> Full keyboard navigation and screen reader support</li>
+                <li>🎨 <strong>Futuristic Theme:</strong> Matches your site's aesthetic</li>
+                <li>⚡ <strong>Smooth Animations:</strong> Buttery smooth transitions and effects</li>
+            </ul>
+        </div>
+        
+        <div class="glass-card">
+            <h2 class="text-2xl font-bold text-purple-400 mb-4">🎮 How to Test</h2>
+            <ol class="space-y-3 text-gray-300 list-decimal list-inside">
+                <li>Click the floating navigation icon at the bottom center</li>
+                <li>Watch the professional modal appear in the center</li>
+                <li>Hover over menu items to see the glow effects</li>
+                <li>Try keyboard navigation (Tab, Enter, Escape)</li>
+                <li>Test on mobile by resizing your browser window</li>
+                <li>Click outside the menu or press Escape to close</li>
+            </ol>
+        </div>
+        
+        <div class="glass-card">
+            <h2 class="text-2xl font-bold text-yellow-400 mb-4">🚀 Improvements Made</h2>
+            <ul class="space-y-3 text-gray-300">
+                <li>✅ Fixed positioning to center the menu properly</li>
+                <li>✅ Added holographic border animation</li>
+                <li>✅ Improved hover effects with glow and scale</li>
+                <li>✅ Enhanced mobile responsiveness</li>
+                <li>✅ Added accessibility features (ARIA, focus trap)</li>
+                <li>✅ Smooth backdrop blur overlay</li>
+                <li>✅ Professional multi-column layout</li>
+                <li>✅ Better visual hierarchy and spacing</li>
+            </ul>
+        </div>
+        
+        <div class="text-center mt-8">
+            <p class="text-gray-400 font-mono">
+                Click the navigation icon below to test the new menu! 👇
+            </p>
+        </div>
+    </div>
+    
+    <script src="floating-nav.js"></script>
+</body>
+</html>
